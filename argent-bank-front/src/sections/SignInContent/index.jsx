@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom'
 import '../../styles/SignInContent.css'
 
 function SignInContent () {
+    const navigate = useNavigate()
+
     return (
         <section className="sign-in-content">
             <i className="fa fa-user-circle sign-in-icon"></i>
@@ -19,7 +22,12 @@ function SignInContent () {
                     <label htmlFor="remember-me">Remember me</label>
                 </div>
                 
-                <button className="sign-in-button">Sign In</button>
+                <button
+                    onClick={() => {return navigate("/profile", {replace:true})}} //to be replaced
+                    className="sign-in-button"
+                    >
+                        Sign In
+                </button>
             
             </form>
         </section>
