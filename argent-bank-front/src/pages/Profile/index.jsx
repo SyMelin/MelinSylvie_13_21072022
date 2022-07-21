@@ -1,7 +1,13 @@
+import React, { useEffect } from 'react'
 import Account from '../../sections/Account'
 import '../../styles/Profile.css'
 
 function Profile ({ accountData }) {
+
+    useEffect(() => {
+        document.title = 'Argent Bank - Profile Page';
+    })
+
     return (
         <main className="main bg-dark">
             <div className="header">
