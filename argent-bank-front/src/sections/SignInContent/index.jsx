@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import '../../styles/SignInContent.css'
 
-function SignInContent () {
+function SignInContent ({ userIsConnected, setUserIsConnected}) {
     const navigate = useNavigate()
 
     return (
@@ -23,7 +23,10 @@ function SignInContent () {
                 </div>
                 
                 <button
-                    onClick={() => {return navigate("/profile", {replace:true})}} //to be replaced
+                    onClick={() => {
+                        setUserIsConnected(true)
+                        return navigate("/profile", {replace:true})
+                    }} //to be replaced
                     className="sign-in-button"
                     >
                         Sign In

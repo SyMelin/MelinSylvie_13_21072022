@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import SignInContent from '../../sections/SignInContent'
 import '../../styles/Login.css'
 
-function Login () {
+function Login ({ userIsConnected, setUserIsConnected }) {
 
     useEffect(() => {
         document.title = 'Argent Bank - Login Page';
@@ -11,7 +11,7 @@ function Login () {
 
     return (
         <main className="main bg-dark">
-            <SignInContent />
+            <SignInContent userIsConnected={userIsConnected} setUserIsConnected={setUserIsConnected}/>
         </main>
     )
 }
