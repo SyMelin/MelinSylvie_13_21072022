@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Account from '../../sections/Account'
 import '../../styles/Profile.css'
 
 function Profile ({ accountData }) {
     const userFirstname = "Tony"
     const userLastname = "Jarvis"
-    const userName = userFirstname + userLastname
+    const userName = userFirstname + " " + userLastname
+    const [isBeingEdited, setIsBeingEdited] = useState(false)
 
     useEffect(() => {
         document.title = 'Argent Bank - Profile Page';
@@ -13,8 +14,9 @@ function Profile ({ accountData }) {
 
     return (
         <main className="main bg-dark">
-            <div className="header">
-                <h1>Welcome back<br /><span>{userName}!</span></h1>
+            {isBeingEdited
+            ? <div className="header">
+                <h1>Welcome back</h1>
                 <form>
                     <div className='form-inputs'>
                         <div className="input-wrapper">
@@ -27,13 +29,31 @@ function Profile ({ accountData }) {
                         </div>
                     </div>
                     <div className='form-buttons'>
-                        <button className="form-button">Save</button>
-                        <button className="form-button">Cancel</button>
+                        <button
+                            onClick={() => setIsBeingEdited(false)} //To be modified
+                            className="form-button"
+                        >
+                            Save
+                        </button>
+                        <button
+                            onClick={() => setIsBeingEdited(false)} //To be modified
+                            className="form-button"
+                        >
+                            Cancel
+                        </button>
                     </div>
                 </form>
-                <button className="edit-button">Edit Name</button>
-                
             </div>
+            : <div className="header">
+                <h1>Welcome back<br />{userName}!</h1>
+                <button
+                    onClick={() => setIsBeingEdited(true)} //To be modified
+                    className="edit-button"
+                >
+                    Edit Name
+                </button>
+            </div>
+            }
             <h2 className="sr-only">Accounts</h2>
             {accountData.map((account, index) => (
                 <Account
