@@ -19,7 +19,28 @@
 .header {
   color: #fff;
   margin-bottom: 2rem;
-} 
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-inputs, .form-buttons {
+  display: flex;
+  justify-content: center;
+  column-gap: 1em;
+}
+
+.form-button {
+  border-color: #00bc77;
+  background-color: white;
+  color: #00bc77;
+  font-weight: bold;
+  padding: 0.5em;
+  width: 7em;
+}
  
 .edit-button {
   border-color: #00bc77;
@@ -27,4 +48,16 @@
   color: #fff;
   font-weight: bold;
   padding: 10px;
+}
+
+.header .input-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.header .input-wrapper input {
+  padding: 5px;
+  font-size: 1.2rem;
 }
