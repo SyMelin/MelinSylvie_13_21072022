@@ -12,10 +12,10 @@ function App() {
       <Router>
         <Header />
         <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/profile" element={<Profile accountData={accountData} />} />
-            </Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile accountData={accountData} />} />
+        </Routes>
         <Footer />
       </Router>
     </div>

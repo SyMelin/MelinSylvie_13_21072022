@@ -19,12 +19,13 @@
   padding: 5px 20px;
 }
   
-.main-nav a {
+.main-nav .router-link {
   font-weight: bold;
   color: #2c3e50;
 }
   
-.main-nav a.router-link-exact-active {
+.main-nav .router-link-exact-active {
+  font-weight: bold;
   color: #42b983;
 }
   
