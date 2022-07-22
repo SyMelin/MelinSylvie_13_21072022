@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { editUserName } from '../../store'
 import Account from '../../sections/Account'
 import '../../styles/Profile.css'
 
@@ -6,7 +8,10 @@ function Profile ({ accountData }) {
     const userFirstname = "Tony"
     const userLastname = "Jarvis"
     const userName = userFirstname + " " + userLastname
-    const [isBeingEdited, setIsBeingEdited] = useState(false)
+
+    const dispatch = useDispatch();
+    const isBeingEdited = useSelector(state => state.isBeingEdited);
+
 
     useEffect(() => {
         document.title = 'Argent Bank - Profile Page';
@@ -30,13 +35,15 @@ function Profile ({ accountData }) {
                     </div>
                     <div className='form-buttons'>
                         <button
-                            onClick={() => setIsBeingEdited(false)} //To be modified
+                            //onClick={() => setIsBeingEdited(false)} //To be modified
+                            onClick={() => {dispatch(editUserName())}}
                             className="form-button"
                         >
                             Save
                         </button>
                         <button
-                            onClick={() => setIsBeingEdited(false)} //To be modified
+                            //onClick={() => setIsBeingEdited(false)} //To be modified
+                            onClick={() => {dispatch(editUserName())}}
                             className="form-button"
                         >
                             Cancel
@@ -47,7 +54,8 @@ function Profile ({ accountData }) {
             : <div className="header">
                 <h1>Welcome back<br />{userName}!</h1>
                 <button
-                    onClick={() => setIsBeingEdited(true)} //To be modified
+                    //onClick={() => setIsBeingEdited(true)} //To be modified
+                    onClick={() => {dispatch(editUserName())}}
                     className="edit-button"
                 >
                     Edit Name
