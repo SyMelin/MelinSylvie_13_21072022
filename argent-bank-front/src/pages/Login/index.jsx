@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import SignInContent from '../../sections/SignInContent'
 import '../../styles/Login.css'
 
-function Login ({ userIsConnected, setUserIsConnected }) {
+function Login () {
 
     useEffect(() => {
         document.title = 'Argent Bank - Login Page';
@@ -11,7 +11,7 @@ function Login ({ userIsConnected, setUserIsConnected }) {
 
     return (
         <main className="main bg-dark">
-            <SignInContent userIsConnected={userIsConnected} setUserIsConnected={setUserIsConnected}/>
+            <SignInContent />
         </main>
     )
 }

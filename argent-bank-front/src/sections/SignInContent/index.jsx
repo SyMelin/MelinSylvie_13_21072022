@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { connectUser } from '../../store'
 import '../../styles/SignInContent.css'
 
-function SignInContent ({ userIsConnected, setUserIsConnected}) {
+function SignInContent () {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     return (
@@ -24,9 +27,9 @@ function SignInContent ({ userIsConnected, setUserIsConnected}) {
                 
                 <button
                     onClick={() => {
-                        setUserIsConnected(true)
+                        dispatch(connectUser()) //To be modified
                         return navigate("/profile", {replace:true})
-                    }} //to be replaced
+                    }}
                     className="sign-in-button"
                     >
                         Sign In

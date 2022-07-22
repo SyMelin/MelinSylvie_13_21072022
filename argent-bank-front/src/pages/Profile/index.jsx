@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editUserName } from '../../store'
 import Account from '../../sections/Account'
@@ -10,8 +10,7 @@ function Profile ({ accountData }) {
     const userName = userFirstname + " " + userLastname
 
     const dispatch = useDispatch();
-    const isBeingEdited = useSelector(state => state.isBeingEdited);
-
+    const editingUserName = useSelector(state => state.editingUserName);
 
     useEffect(() => {
         document.title = 'Argent Bank - Profile Page';
@@ -19,7 +18,7 @@ function Profile ({ accountData }) {
 
     return (
         <main className="main bg-dark">
-            {isBeingEdited
+            {editingUserName
             ? <div className="header">
                 <h1>Welcome back</h1>
                 <form>
@@ -35,15 +34,13 @@ function Profile ({ accountData }) {
                     </div>
                     <div className='form-buttons'>
                         <button
-                            //onClick={() => setIsBeingEdited(false)} //To be modified
-                            onClick={() => {dispatch(editUserName())}}
+                            onClick={() => {dispatch(editUserName())}} //To be modified
                             className="form-button"
                         >
                             Save
                         </button>
                         <button
-                            //onClick={() => setIsBeingEdited(false)} //To be modified
-                            onClick={() => {dispatch(editUserName())}}
+                            onClick={() => {dispatch(editUserName())}} //To be modified
                             className="form-button"
                         >
                             Cancel
@@ -54,8 +51,7 @@ function Profile ({ accountData }) {
             : <div className="header">
                 <h1>Welcome back<br />{userName}!</h1>
                 <button
-                    //onClick={() => setIsBeingEdited(true)} //To be modified
-                    onClick={() => {dispatch(editUserName())}}
+                    onClick={() => {dispatch(editUserName())}} //To be modified
                     className="edit-button"
                 >
                     Edit Name

@@ -1,9 +1,13 @@
 import { Link, NavLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { connectUser } from '../../store'
 import logo from '../../assets/argentBankLogo.png'
 import '../../styles/Header.css'
 
-function Header ({ userIsConnected, setUserIsConnected }) {
+function Header () {
     const userFirstname = 'Tony'
+    const dispatch = useDispatch()
+    const userIsConnected = useSelector(state => state.userIsConnected)
 
     return (
         <header>
@@ -26,7 +30,7 @@ function Header ({ userIsConnected, setUserIsConnected }) {
                     </Link>
                     <NavLink
                         to="/"
-                        onClick={() => setUserIsConnected(false)}
+                        onClick={() => dispatch(connectUser())}
                         className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}>
                         <i className="fa fa-sign-out"></i>
                         Sign Out
