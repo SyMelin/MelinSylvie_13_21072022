@@ -1,11 +1,26 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { connectUser } from '../../store'
+import { useDispatch, useSelector, useStore } from 'react-redux'
+//import { connectUser } from '../../store'
+import { fetchOrUpdateLogin } from '../../utils/features/login'
+import { selectLogin } from '../../utils/selectors'
+
 import '../../styles/SignInContent.css'
 
 function SignInContent () {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+   // const dispatch = useDispatch()
+   // const navigate = useNavigate()
+
+    const login = useSelector(selectLogin);
+
+    const store = useStore()
+/*
+    useEffect (() => {
+        fetchOrUpdateLogin(store);
+    }, [store])
+    
+*/
+
 
     return (
         <section className="sign-in-content">
@@ -27,8 +42,10 @@ function SignInContent () {
                 
                 <button
                     onClick={() => {
-                        dispatch(connectUser()) //To be modified
-                        return navigate("/profile", {replace:true})
+                        fetchOrUpdateLogin(store);
+                        return
+                        //dispatch(connectUser()) //To be modified
+                       // return navigate("/profile", {replace:true})
                     }}
                     className="sign-in-button"
                     >

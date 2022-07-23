@@ -1,8 +1,10 @@
-import { createStore } from 'redux'
+import { combineReducers, createStore } from 'redux'
 import produce from 'immer'
+import loginReducer from './features/login'
+import userReducer from './features/user'
 
 const reduxDevtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-
+/*
 const initialState = {
     userIsConnected: false,
     editingUserName: false,
@@ -30,6 +32,13 @@ function reducer(state = initialState, action) {
     }
     return state;
 }
+*/
+
+//combineReducers is used to run several reducers together
+const reducer = combineReducers({
+    login: loginReducer,
+    user: userReducer,
+})
 
 
 // store

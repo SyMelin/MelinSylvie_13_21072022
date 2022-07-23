@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector, useStore } from 'react-redux'
+import { selectUser  } from '../../utils/selectors'
 import { editUserName } from '../../store'
+import { fetchOrUpdateUser } from '../../utils/features/user'
 import Account from '../../sections/Account'
 import '../../styles/Profile.css'
 
@@ -15,7 +17,15 @@ function Profile ({ accountData }) {
     useEffect(() => {
         document.title = 'Argent Bank - Profile Page';
     })
+/*
+    const user = useSelector(selectUser);
 
+    const store = useStore()
+
+    useEffect (() => {
+        fetchOrUpdateUser(store);
+    }, [store])
+*/
     return (
         <main className="main bg-dark">
             {editingUserName
