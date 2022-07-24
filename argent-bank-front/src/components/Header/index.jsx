@@ -8,11 +8,12 @@ import '../../styles/Header.css'
 function Header () {
     const userFirstname = 'Tony'
     const dispatch = useDispatch()
-    const store = useStore()
+   // const store = useStore()
     const login = useSelector(selectLogin);
-    console.log(store.getState().login.userIsConnected)
+   // console.log(store.getState().login.userIsConnected)
    // const userIsConnected = useSelector(state => state.userIsConnected)
-   const userIsConnected = store.getState().login.userIsConnected
+   const userIsConnected = login.userIsConnected
+   //console.log("userIsConnected", userIsConnected)
 
     return (
         <header>

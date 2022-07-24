@@ -12,11 +12,11 @@ const initialState = {
 const FETCHING = 'login/fetching'
 const RESOLVED = 'login/resolved'
 const REJECTED = 'login/rejected'
-const CONNECT_USER = 'connectUser'
+const CONNECT_USER = 'login/connectUser'
 
-const userFetching = () => ({ type: FETCHING })
-const userResolved = (token) => ({ type: RESOLVED, payload: token })
-const userRejected = (error) => ({ type: REJECTED, payload: error })
+const loginFetching = () => ({ type: FETCHING })
+const loginResolved = (token) => ({ type: RESOLVED, payload: token })
+const loginRejected = (error) => ({ type: REJECTED, payload: error })
 const connectUser = () => ({ type: CONNECT_USER })
 
 export async function fetchOrUpdateLogin(store) {
@@ -26,7 +26,7 @@ export async function fetchOrUpdateLogin(store) {
         return;
     }
     // else, launch the request
-    store.dispatch(userFetching());
+    store.dispatch(loginFetching());
     try {
         const response = await fetch(
             'http://localhost:3001/api/v1/user/login',
@@ -47,10 +47,10 @@ export async function fetchOrUpdateLogin(store) {
         console.log("data", await data)
         const token = await data.body.token
         console.log("token", token)
-        store.dispatch(userResolved(token))
+        store.dispatch(loginResolved(token))
         store.dispatch(connectUser())
     } catch (error) {
-        store.dispatch(userRejected(error))
+        store.dispatch(loginRejected(error))
     }
 }
 
@@ -91,7 +91,7 @@ export default function loginReducer(state = initialState, action) {
                 return;
             }
             case CONNECT_USER: {
-                draft.userIsConnected = true
+                draft.userIsConnected = !draft.userIsConnected
                 return
             }
             default:

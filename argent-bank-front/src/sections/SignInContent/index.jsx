@@ -9,7 +9,7 @@ import '../../styles/SignInContent.css'
 
 function SignInContent () {
    // const dispatch = useDispatch()
-   // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const login = useSelector(selectLogin);
 
@@ -18,8 +18,9 @@ function SignInContent () {
     useEffect (() => {
         fetchOrUpdateLogin(store);
     }, [store])
-    
 */
+    
+
 
 
     return (
@@ -39,20 +40,20 @@ function SignInContent () {
                     <input type="checkbox" id="remember-me" />
                     <label htmlFor="remember-me">Remember me</label>
                 </div>
-                
+            </form>
                 <button
                     onClick={() => {
                         fetchOrUpdateLogin(store);
-                        return
+                       // return
                         //dispatch(connectUser()) //To be modified
-                       // return navigate("/profile", {replace:true})
+                        return navigate("/profile", {replace:true})
                     }}
                     className="sign-in-button"
                     >
                         Sign In
                 </button>
             
-            </form>
+            
         </section>
     )
 }
