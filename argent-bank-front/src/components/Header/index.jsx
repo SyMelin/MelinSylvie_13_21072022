@@ -1,20 +1,26 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useDispatch, useSelector, useStore } from 'react-redux'
-import { selectLogin } from '../../utils/selectors'
+import { selectLogin, selectUser } from '../../utils/selectors'
 //import { connectUser } from '../../store'
 import logo from '../../assets/argentBankLogo.png'
 import '../../styles/Header.css'
 
 function Header () {
-    const userFirstname = 'Tony'
+    //const userFirstname = 'Tony'
     const dispatch = useDispatch()
-   // const store = useStore()
+    // const store = useStore()
+    const user = useSelector(selectUser);
     const login = useSelector(selectLogin);
-   // console.log(store.getState().login.userIsConnected)
-   // const userIsConnected = useSelector(state => state.userIsConnected)
-   const userIsConnected = login.userIsConnected
-   //console.log("userIsConnected", userIsConnected)
+    // console.log(store.getState().login.userIsConnected)
+    // const userIsConnected = useSelector(state => state.userIsConnected)
+    const userIsConnected = login.userIsConnected
+    //console.log("userIsConnected", userIsConnected)
+    
 
+    const isRejected = login.status === 'rejected' || user.status === 'rejected'
+    const userIsLoading = user.status === 'void' || user.status === 'pending'
+    const loginIsLoading = login.status === 'void' || login.status === 'pending'
+    
     return (
         <header>
             <nav className="main-nav">
@@ -28,30 +34,29 @@ function Header () {
                     />
                     <h1 className="sr-only">Argent Bank</h1>
                 </Link>
-                {userIsConnected
-                ? <div>
-                    <Link to="/profile" className="main-nav-item router-link">
-                        <i className="fa fa-user-circle"></i>
-                        {userFirstname}
-                    </Link>
-                    <NavLink
-                        to="/"
-                        //onClick={() => dispatch(connectUser())}
-                        className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}>
-                        <i className="fa fa-sign-out"></i>
-                        Sign Out
-                    </NavLink>
-                </div>
-                : <div>
-                    <NavLink
-                        to="/login"
-                        className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}>
-                        <i className="fa fa-user-circle"></i>
-                        Sign In
-                    </NavLink>
-                </div>
+                {!isRejected && userIsConnected && !loginIsLoading && !userIsLoading
+                    ? <div>
+                        <Link to="/profile" className="main-nav-item router-link">
+                            <i className="fa fa-user-circle"></i>
+                            {user.data.firstName}
+                        </Link>
+                        <NavLink
+                            to="/"
+                            //onClick={() => dispatch(connectUser())}
+                            className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}>
+                            <i className="fa fa-sign-out"></i>
+                            Sign Out
+                        </NavLink>
+                    </div>
+                    : <div>
+                        <NavLink
+                            to="/login"
+                            className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}>
+                            <i className="fa fa-user-circle"></i>
+                            Sign In
+                        </NavLink>
+                    </div>
                 }
-                
             </nav>
         </header>
     )
