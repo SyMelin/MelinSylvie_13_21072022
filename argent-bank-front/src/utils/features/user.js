@@ -1,7 +1,6 @@
 import produce from 'immer'
 import { selectUser } from '../selectors'
 
-
 const initialState = {
     status: 'void',
     data: null,
@@ -14,9 +13,9 @@ const REJECTED = 'user/rejected'
 
 const userFetching = () => ({ type: FETCHING })
 const userResolved = (data) => ({ type: RESOLVED, payload: data })
-const userRejected = (error) => ({ type: REJECTED, payload: error })
+const userRejected = (message) => ({ type: REJECTED, payload: message })
 
-export async function fetchOrUpdateUser(store) {
+export async function fetchOrUpdateUser(store, token) {
     const status = selectUser(store.getState()).status
     // if request is pending or updating, stop the action to avoid double request
     if (status === 'pending' || status === 'updating') {
@@ -26,23 +25,28 @@ export async function fetchOrUpdateUser(store) {
     store.dispatch(userFetching());
     try {
         const response = await fetch(
-            'http://localhost:3001/api/v1/user/login',
+            'http://localhost:3001/api/v1/user/profile',
             {
                 // Adding method type
                 method: 'POST',
                 // Adding headers
-                headers: { 'Content-Type': 'application/json' },
-                // Adding body or contents to send
-                body: JSON.stringify({
-                    email: 'tony@stark.com',
-                    password: 'password123'
-                })
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
             }
         );
-        console.log('response', response)
-        const data = await response.json();
-        console.log("data", await data)
-        store.dispatch(userResolved(data));
+       // console.log('response', response)
+        const resJson = await response.json();
+        console.log("resJson", await resJson)
+        if (resJson.status === 200) {
+            store.dispatch(userResolved(resJson.body))
+        } else {
+            store.dispatch(userRejected(resJson.message))
+        }
+        /*const data = await resJson.body
+        console.log("userData", data)
+        store.dispatch(userResolved(data))*/
     } catch (error) {
         store.dispatch(userRejected(error))
     }  

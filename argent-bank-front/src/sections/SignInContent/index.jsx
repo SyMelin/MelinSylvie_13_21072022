@@ -10,18 +10,13 @@ import '../../styles/SignInContent.css'
 function SignInContent () {
    // const dispatch = useDispatch()
     const navigate = useNavigate()
-
     const login = useSelector(selectLogin);
-
     const store = useStore()
 /*
     useEffect (() => {
         fetchOrUpdateLogin(store);
     }, [store])
 */
-    
-
-
 
     return (
         <section className="sign-in-content">
@@ -46,6 +41,9 @@ function SignInContent () {
                         fetchOrUpdateLogin(store);
                        // return
                         //dispatch(connectUser()) //To be modified
+                        if (login.status === 'rejected') {
+                            return <span>Something went wrong</span>
+                        }
                         return navigate("/profile", {replace:true})
                     }}
                     className="sign-in-button"

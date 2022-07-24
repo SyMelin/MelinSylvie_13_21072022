@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
-import { selectUser  } from '../../utils/selectors'
-import { editUserName } from '../../store'
+import { selectUser, selectLogin  } from '../../utils/selectors'
+//import { editUserName } from '../../store'
 import { fetchOrUpdateUser } from '../../utils/features/user'
 import Account from '../../sections/Account'
 import '../../styles/Profile.css'
@@ -11,21 +11,36 @@ function Profile ({ accountData }) {
     const userLastname = "Jarvis"
     const userName = userFirstname + " " + userLastname
 
+    /*
     const dispatch = useDispatch();
     const editingUserName = useSelector(state => state.editingUserName);
+    */
+
+    const editingUserName = false
+
+    const user = useSelector(selectUser);
+    const userData = user.data
+    const login = useSelector(selectLogin);
+    const token =  login.token
+    const store = useStore()
 
     useEffect(() => {
         document.title = 'Argent Bank - Profile Page';
     })
-/*
-    const user = useSelector(selectUser);
-
-    const store = useStore()
 
     useEffect (() => {
-        fetchOrUpdateUser(store);
-    }, [store])
-*/
+        fetchOrUpdateUser(store, token);
+    }, [store, token])
+
+    console.log('test', user.data)
+
+    if (user.status === 'rejected') {
+        return <span>Something went wrong</span>
+    }
+
+    //console.log('est2', user.date.firstName)
+
+
     return (
         <main className="main bg-dark">
             {editingUserName
@@ -34,23 +49,23 @@ function Profile ({ accountData }) {
                 <form>
                     <div className='form-inputs'>
                         <div className="input-wrapper">
-                            <label htmlFor="userFirstname" className="sr-only">UserFirstname</label>
+                            <label htmlFor="userFirstname" className="sr-only">Firstname</label>
                             <input type="text" id="userFirstname" placeholder="Firstname"/>
                         </div>
                         <div className="input-wrapper">
-                            <label htmlFor="userLastname" className="sr-only">UserLastname</label>
+                            <label htmlFor="userLastname" className="sr-only">Lastname</label>
                             <input type="text" id="userLastname" placeholder="Lastname"/>
                         </div>
                     </div>
                     <div className='form-buttons'>
                         <button
-                            onClick={() => {dispatch(editUserName())}} //To be modified
+                           // onClick={() => {dispatch(editUserName())}} //To be modified
                             className="form-button"
                         >
                             Save
                         </button>
                         <button
-                            onClick={() => {dispatch(editUserName())}} //To be modified
+                           // onClick={() => {dispatch(editUserName())}} //To be modified
                             className="form-button"
                         >
                             Cancel
@@ -59,9 +74,9 @@ function Profile ({ accountData }) {
                 </form>
             </div>
             : <div className="header">
-                <h1>Welcome back<br />{userName}!</h1>
+                <h1>Welcome back<br />!</h1>
                 <button
-                    onClick={() => {dispatch(editUserName())}} //To be modified
+                  //  onClick={() => {dispatch(editUserName())}} //To be modified
                     className="edit-button"
                 >
                     Edit Name

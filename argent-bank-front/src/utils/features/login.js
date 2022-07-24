@@ -15,8 +15,8 @@ const REJECTED = 'login/rejected'
 const CONNECT_USER = 'login/connectUser'
 
 const loginFetching = () => ({ type: FETCHING })
-const loginResolved = (token) => ({ type: RESOLVED, payload: token })
-const loginRejected = (error) => ({ type: REJECTED, payload: error })
+const loginResolved = (data) => ({ type: RESOLVED, payload: data.token })
+const loginRejected = (message) => ({ type: REJECTED, payload: message })
 const connectUser = () => ({ type: CONNECT_USER })
 
 export async function fetchOrUpdateLogin(store) {
@@ -43,12 +43,14 @@ export async function fetchOrUpdateLogin(store) {
             }
         );
         //console.log('response', response)
-        const data = await response.json();
-        console.log("data", await data)
-        const token = await data.body.token
-        console.log("token", token)
-        store.dispatch(loginResolved(token))
-        store.dispatch(connectUser())
+        const resJson = await response.json();
+        console.log("resJson", await resJson)
+        if (resJson.status === 200) {
+            store.dispatch(loginResolved(resJson.body))
+            store.dispatch(connectUser())
+        } else {
+            store.dispatch(loginRejected(resJson.message))
+        }
     } catch (error) {
         store.dispatch(loginRejected(error))
     }
