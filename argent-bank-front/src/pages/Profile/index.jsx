@@ -19,7 +19,7 @@ function Profile ({ accountData }) {
     const editingUserName = false
 
     const user = useSelector(selectUser);
-    const userData = user.data
+    //const userData = user.data
     const login = useSelector(selectLogin);
     const token =  login.token
     const store = useStore()
@@ -32,16 +32,19 @@ function Profile ({ accountData }) {
         fetchOrUpdateUser(store, token);
     }, [store, token])
 
-    console.log('test', user.data)
+    //console.log('test', user.data)
 
     if (user.status === 'rejected') {
         return <span>Something went wrong</span>
     }
 
-    //console.log('est2', user.date.firstName)
+    const isLoading = user.status === 'void' || user.status === 'pending'
 
+    if (isLoading) {
+        return <span>Loading</span>
+    }
 
-    return (
+    return !isLoading ? (
         <main className="main bg-dark">
             {editingUserName
             ? <div className="header">
@@ -74,7 +77,7 @@ function Profile ({ accountData }) {
                 </form>
             </div>
             : <div className="header">
-                <h1>Welcome back<br />!</h1>
+                <h1>Welcome back<br />{user.data.firstName + " " + user.data.lastName}!</h1>
                 <button
                   //  onClick={() => {dispatch(editUserName())}} //To be modified
                     className="edit-button"
@@ -89,9 +92,11 @@ function Profile ({ accountData }) {
                     key={`accountData--${index}`}
                     account={account}
                 />
-            ))}
+            )
+        )}
         </main>
     )
+    : null
 }
 
 export default Profile
