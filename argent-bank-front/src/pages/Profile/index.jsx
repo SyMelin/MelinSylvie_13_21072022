@@ -1,25 +1,24 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
-import { selectUser, selectLogin  } from '../../utils/selectors'
+import { selectUser, selectLogin, selectNameEditing  } from '../../utils/selectors'
 //import { editUserName } from '../../store'
 import { fetchOrUpdateUser } from '../../utils/features/user'
+import { setEditFormState } from '../../utils/features/nameEditing'
 import Account from '../../sections/Account'
 import '../../styles/Profile.css'
 
 function Profile ({ accountData }) {
-    const userFirstname = "Tony"
-    const userLastname = "Jarvis"
-    const userName = userFirstname + " " + userLastname
+    //const userFirstname = "Tony"
+    //const userLastname = "Jarvis"
+    //const userName = userFirstname + " " + userLastname
 
-    /*
+    
     const dispatch = useDispatch();
-    const editingUserName = useSelector(state => state.editingUserName);
-    */
-
-    const editingUserName = false
-
+    const nameEditing = useSelector(selectNameEditing);
+    //console.log(nameEditing.editFormIsOpen)
+    const editFormIsOpen = nameEditing.editFormIsOpen
+   // console.log(editFormIsOpen)
     const user = useSelector(selectUser);
-    //const userData = user.data
     const login = useSelector(selectLogin);
     const token =  login.token
     const store = useStore()
@@ -31,8 +30,6 @@ function Profile ({ accountData }) {
     useEffect (() => {
         fetchOrUpdateUser(store, token);
     }, [store, token])
-
-    //console.log('test', user.data)
 
     if (user.status === 'rejected') {
         return <span>Something went wrong</span>
@@ -46,29 +43,35 @@ function Profile ({ accountData }) {
 
     return !isLoading ? (
         <main className="main bg-dark">
-            {editingUserName
+            {editFormIsOpen
             ? <div className="header">
                 <h1>Welcome back</h1>
                 <form>
                     <div className='form-inputs'>
                         <div className="input-wrapper">
                             <label htmlFor="userFirstname" className="sr-only">Firstname</label>
-                            <input type="text" id="userFirstname" placeholder="Firstname"/>
+                            <input
+                                type="text"
+                                id="userFirstname"
+                                placeholder="Firstname"/>
                         </div>
                         <div className="input-wrapper">
                             <label htmlFor="userLastname" className="sr-only">Lastname</label>
-                            <input type="text" id="userLastname" placeholder="Lastname"/>
+                            <input
+                                type="text"
+                                id="userLastname"
+                                placeholder="Lastname"/>
                         </div>
                     </div>
                     <div className='form-buttons'>
                         <button
-                           // onClick={() => {dispatch(editUserName())}} //To be modified
+                            //onClick={() => {dispatch(setEditFormState())}} //To be modified
                             className="form-button"
                         >
                             Save
                         </button>
                         <button
-                           // onClick={() => {dispatch(editUserName())}} //To be modified
+                            onClick={() => {dispatch(setEditFormState())}} //To be modified
                             className="form-button"
                         >
                             Cancel
@@ -79,7 +82,7 @@ function Profile ({ accountData }) {
             : <div className="header">
                 <h1>Welcome back<br />{user.data.firstName + " " + user.data.lastName}!</h1>
                 <button
-                  //  onClick={() => {dispatch(editUserName())}} //To be modified
+                    onClick={() => {dispatch(setEditFormState())}} //To be modified
                     className="edit-button"
                 >
                     Edit Name

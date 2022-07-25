@@ -5,3 +5,5 @@ export const selectSignInInput = (state) => state.signInInput
 export const selectLogin = (state) => state.login
 
 export const selectUser = (state) => state.user
+
+export const selectNameEditing = (state) => state.nameEditing
