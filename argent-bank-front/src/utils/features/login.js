@@ -13,11 +13,13 @@ const FETCHING = 'login/fetching'
 const RESOLVED = 'login/resolved'
 const REJECTED = 'login/rejected'
 const CONNECT_USER = 'login/connectUser'
+const SIGN_OUT = 'login/signOut'
 
 const loginFetching = () => ({ type: FETCHING })
 const loginResolved = (data) => ({ type: RESOLVED, payload: data.token })
 const loginRejected = (message) => ({ type: REJECTED, payload: message })
 const connectUser = () => ({ type: CONNECT_USER })
+export const loginSignOut = () => ({ type: SIGN_OUT})
 
 export async function fetchOrUpdateLogin(store, signInData) {
     const status = selectLogin(store.getState()).status
@@ -91,6 +93,13 @@ export default function loginReducer(state = initialState, action) {
             }
             case CONNECT_USER: {
                 draft.userIsConnected = !draft.userIsConnected
+                return
+            }
+            case SIGN_OUT: {
+                draft.status = 'void'
+                draft.token = null
+                draft.userIsConnected = false
+                draft.error = null
                 return
             }
             default:

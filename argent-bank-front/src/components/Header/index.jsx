@@ -1,22 +1,14 @@
-import { Link, NavLink } from 'react-router-dom'
-import { useDispatch, useSelector, useStore } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { selectLogin, selectUser } from '../../utils/selectors'
-//import { connectUser } from '../../store'
 import LogButton from '../LogButton'
 import logo from '../../assets/argentBankLogo.png'
 import '../../styles/Header.css'
 
 function Header () {
-    //const userFirstname = 'Tony'
-    const dispatch = useDispatch()
-    // const store = useStore()
     const user = useSelector(selectUser);
     const login = useSelector(selectLogin);
-    // console.log(store.getState().login.userIsConnected)
-    // const userIsConnected = useSelector(state => state.userIsConnected)
     const userIsConnected = login.userIsConnected
-    //console.log("userIsConnected", userIsConnected)
-    
 
     const isRejected = login.status === 'rejected' || user.status === 'rejected'
     const userIsLoading = user.status === 'void' || user.status === 'pending'
