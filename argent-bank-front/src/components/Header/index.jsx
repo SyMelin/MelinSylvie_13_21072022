@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import { selectLogin, selectUser } from '../../utils/selectors'
 //import { connectUser } from '../../store'
+import LogButton from '../LogButton'
 import logo from '../../assets/argentBankLogo.png'
 import '../../styles/Header.css'
 
@@ -40,21 +41,10 @@ function Header () {
                             <i className="fa fa-user-circle"></i>
                             {user.data.firstName}
                         </Link>
-                        <NavLink
-                            to="/"
-                            //onClick={() => dispatch(connectUser())}
-                            className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}>
-                            <i className="fa fa-sign-out"></i>
-                            Sign Out
-                        </NavLink>
+                        <LogButton userIsConnected={userIsConnected} />
                     </div>
                     : <div>
-                        <NavLink
-                            to="/login"
-                            className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}>
-                            <i className="fa fa-user-circle"></i>
-                            Sign In
-                        </NavLink>
+                        <LogButton userIsConnected={userIsConnected} />
                     </div>
                 }
             </nav>
