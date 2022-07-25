@@ -3,6 +3,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux'
 import { selectUser, selectLogin, selectNameEditing  } from '../../utils/selectors'
 //import { editUserName } from '../../store'
 import { fetchOrUpdateUser } from '../../utils/features/user'
+import { setInputValueFirstName, setInputValueLastName } from '../../utils/features/nameEditing'
 import { setEditFormState } from '../../utils/features/nameEditing'
 import Account from '../../sections/Account'
 import '../../styles/Profile.css'
@@ -53,14 +54,20 @@ function Profile ({ accountData }) {
                             <input
                                 type="text"
                                 id="userFirstname"
-                                placeholder="Firstname"/>
+                                placeholder="Firstname"
+                                defaultValue={nameEditing.firstName}
+                                onChange={(e) => dispatch(setInputValueFirstName(e.target.value, e.target.id))}
+                                />
                         </div>
                         <div className="input-wrapper">
                             <label htmlFor="userLastname" className="sr-only">Lastname</label>
                             <input
                                 type="text"
                                 id="userLastname"
-                                placeholder="Lastname"/>
+                                placeholder="Lastname"
+                                defaultValue={nameEditing.lastName}
+                                onChange={(e) => dispatch(setInputValueLastName(e.target.value, e.target.id))}
+                                />
                         </div>
                     </div>
                     <div className='form-buttons'>

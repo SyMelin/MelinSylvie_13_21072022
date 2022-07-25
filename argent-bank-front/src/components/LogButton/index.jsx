@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { signInSignOut } from '../../utils/features/signInInput'
 import { loginSignOut } from '../../utils/features/login'
 import { userSignOut } from '../../utils/features/user'
+import { nameEditingSignOut } from '../../utils/features/nameEditing'
 
 function LogButton ({ userIsConnected }) {
 
@@ -16,6 +17,7 @@ function LogButton ({ userIsConnected }) {
                 dispatch(signInSignOut())
                 dispatch(loginSignOut())
                 dispatch(userSignOut())
+                dispatch(nameEditingSignOut())
             }}
             className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}>
             <i className="fa fa-sign-out"></i>
