@@ -19,7 +19,7 @@ const loginResolved = (data) => ({ type: RESOLVED, payload: data.token })
 const loginRejected = (message) => ({ type: REJECTED, payload: message })
 const connectUser = () => ({ type: CONNECT_USER })
 
-export async function fetchOrUpdateLogin(store) {
+export async function fetchOrUpdateLogin(store, signInData) {
     const status = selectLogin(store.getState()).status
     // if request is pending or updating, stop the action to avoid double request
     if (status === 'pending' || status === 'updating') {
@@ -36,10 +36,7 @@ export async function fetchOrUpdateLogin(store) {
                 // Adding headers
                 headers: { 'Content-Type': 'application/json' },
                 // Adding body or contents to send
-                body: JSON.stringify({
-                    email: 'tony@stark.com',
-                    password: 'password123'
-                })
+                body: JSON.stringify(signInData)
             }
         );
         //console.log('response', response)

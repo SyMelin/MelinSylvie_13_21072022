@@ -44,9 +44,6 @@ export async function fetchOrUpdateUser(store, token) {
         } else {
             store.dispatch(userRejected(resJson.message))
         }
-        /*const data = await resJson.body
-        console.log("userData", data)
-        store.dispatch(userResolved(data))*/
     } catch (error) {
         store.dispatch(userRejected(error))
     }  

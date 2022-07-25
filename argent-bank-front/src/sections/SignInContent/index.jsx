@@ -1,22 +1,17 @@
-import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector, useStore } from 'react-redux'
-//import { connectUser } from '../../store'
+import { setInputValueUsername, setInputValuePassword } from '../../utils/features/signInInput'
 import { fetchOrUpdateLogin } from '../../utils/features/login'
-import { selectLogin } from '../../utils/selectors'
-
+import { selectSignInInput, selectLogin } from '../../utils/selectors'
 import '../../styles/SignInContent.css'
 
 function SignInContent () {
-   // const dispatch = useDispatch()
+
+    const dispatch = useDispatch()
     const navigate = useNavigate()
+    const signInInput = useSelector(selectSignInInput);
     const login = useSelector(selectLogin);
     const store = useStore()
-/*
-    useEffect (() => {
-        fetchOrUpdateLogin(store);
-    }, [store])
-*/
 
     return (
         <section className="sign-in-content">
@@ -25,22 +20,34 @@ function SignInContent () {
             <form>
                 <div className="input-wrapper">
                     <label htmlFor="username">Username</label>
-                    <input type="text" id="username" />
+                    <input
+                        type="text"
+                        id="username"
+                        defaultValue={signInInput.username}
+                        onChange={(e) => dispatch(setInputValueUsername(e.target.value, e.target.id))}
+                    />
                 </div>
                 <div className="input-wrapper">
                     <label htmlFor="password">Password</label>
-                    <input type="password" id="password" />
+                    <input
+                        type="password"
+                        id="password"
+                        defaultValue={signInInput.password}
+                        onChange={(e) => dispatch(setInputValuePassword(e.target.value, e.target.id))}
+                    />
                 </div>
                 <div className="input-remember">
-                    <input type="checkbox" id="remember-me" />
+                    <input
+                        type="checkbox"
+                        id="remember-me"
+                    />
                     <label htmlFor="remember-me">Remember me</label>
                 </div>
-            </form>
                 <button
                     onClick={() => {
-                        fetchOrUpdateLogin(store);
-                       // return
-                        //dispatch(connectUser()) //To be modified
+                        const signInData = signInInput
+                      //  console.log(signInData)
+                        fetchOrUpdateLogin(store, signInData);
                         if (login.status === 'rejected') {
                             return <span>Something went wrong</span>
                         }
@@ -50,6 +57,8 @@ function SignInContent () {
                     >
                         Sign In
                 </button>
+            </form>
+                
             
             
         </section>
