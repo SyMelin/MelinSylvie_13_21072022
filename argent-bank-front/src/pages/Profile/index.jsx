@@ -24,8 +24,6 @@ function Profile ({ accountData }) {
     const token =  login.token
     const store = useStore()
 
-    
-
     useEffect(() => {
         document.title = 'Argent Bank - Profile Page';
     })
@@ -56,17 +54,22 @@ function Profile ({ accountData }) {
                     </div>
                     <div className='form-buttons'>
                         <button
-                            onClick={() => {
+                            onClick={(e) => {
+                                e.preventDefault()
                                 const editNameData = {
                                     firstName: nameEditing.firstName,
                                     lastName: nameEditing.lastName,
                                 }
-                                console.log('editNameData',editNameData)
+                                console.log('editNameData', editNameData)
                                 fetchOrUpdateEditForm(store, token, editNameData)
-                                if (login.status === 'resolved') {
-                                    dispatch(setEditFormState())
+                               // if (login.status === 'resolved') {
+                               //     dispatch(setEditFormState())
                                     
-                                }
+                               // }
+                               dispatch(setEditFormState())
+                              // console.log(nameEditing.firstName)
+                              // console.log('rep', nameEditing.data)
+                                 dispatch(usernameUpdated(nameEditing.data))
                                 if (nameEditing.status === 'resolved') {
                                     console.log("Hello")
                                     //dispatch(usernameUpdated(nameEditing.data))
