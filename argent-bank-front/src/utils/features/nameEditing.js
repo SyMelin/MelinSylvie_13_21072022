@@ -90,7 +90,7 @@ export default function nameEditingReducer(state = initialState, action) {
         }
         if (action.type === RESOLVED) {
             if(draft.status === 'pending' || draft.status === 'updating') {
-                draft.token = action.payload
+                draft.data = action.payload
                 draft.status = 'resolved'
                 return
             }
@@ -99,7 +99,7 @@ export default function nameEditingReducer(state = initialState, action) {
         if (action.type === REJECTED) {
             if (draft.status === 'pending' || draft.status === 'updating') {
                 draft.error = action.payload
-                draft.token = null
+                draft.data = null
                 draft.status = 'rejected'
                 return
             }
