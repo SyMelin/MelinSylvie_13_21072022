@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import { selectUser, selectLogin, selectNameEditing  } from '../../utils/selectors'
 //import { editUserName } from '../../store'
-import { fetchOrUpdateUser } from '../../utils/features/user'
+import { fetchOrUpdateUser, usernameUpdated } from '../../utils/features/user'
 import { setInputValueFirstName, setInputValueLastName } from '../../utils/features/nameEditing'
 import { setEditFormState, fetchOrUpdateEditForm } from '../../utils/features/nameEditing'
 import Account from '../../sections/Account'
@@ -81,6 +81,11 @@ function Profile ({ accountData }) {
                                 fetchOrUpdateEditForm(store, token, editNameData)
                                 if (login.status === 'resolved') {
                                     dispatch(setEditFormState())
+                                    
+                                }
+                                if (nameEditing.status === 'resolved') {
+                                    console.log("Hello")
+                                    //dispatch(usernameUpdated(nameEditing.data))
                                 }
                                 }} //To be modified
                             className="form-button"

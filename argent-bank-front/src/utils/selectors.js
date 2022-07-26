@@ -1,6 +1,6 @@
 //selectors used with useSelector hook
 
-export const selectSignInInput = (state) => state.signInInput
+export const selectSignInForm = (state) => state.signInForm
 
 export const selectLogin = (state) => state.login
 

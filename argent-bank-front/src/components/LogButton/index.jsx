@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { signInSignOut } from '../../utils/features/signInInput'
+import { signInSignOut } from '../../utils/features/signInForm'
 import { loginSignOut } from '../../utils/features/login'
 import { userSignOut } from '../../utils/features/user'
 import { nameEditingSignOut } from '../../utils/features/nameEditing'

@@ -10,11 +10,13 @@ const initialState = {
 const FETCHING = 'user/fetching'
 const RESOLVED = 'user/resolved'
 const REJECTED = 'user/rejected'
+const USERNAME_UPDATED = 'user/usernameUpdated'
 const SIGN_OUT = 'user/signOut'
 
 const userFetching = () => ({ type: FETCHING })
 const userResolved = (data) => ({ type: RESOLVED, payload: data })
 const userRejected = (message) => ({ type: REJECTED, payload: message })
+export const usernameUpdated = (data) => ({ type: USERNAME_UPDATED, payload: data })
 export const userSignOut = () => ({ type: SIGN_OUT})
 
 export async function fetchOrUpdateUser(store, token) {
@@ -87,6 +89,11 @@ export default function userReducer(state = initialState, action) {
                 }
                 return;
             }
+            case USERNAME_UPDATED: {
+                    draft.data = action.payload
+                    draft.status = 'resolved'
+                    return
+                }
             case SIGN_OUT: {
                 draft.status = 'void'
                 draft.data = null
