@@ -6,4 +6,4 @@ export const selectLogin = (state) => state.login
 
 export const selectUser = (state) => state.user
 
-export const selectNameEditing = (state) => state.nameEditing
+export const selectEditNameForm = (state) => state.editNameForm

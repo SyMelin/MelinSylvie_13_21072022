@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
-import { selectUser, selectLogin, selectNameEditing  } from '../../utils/selectors'
+import { selectUser, selectLogin, selectEditNameForm  } from '../../utils/selectors'
 //import { editUserName } from '../../store'
 import { fetchOrUpdateUser, usernameUpdated } from '../../utils/features/user'
-import { setInputValueFirstName, setInputValueLastName } from '../../utils/features/nameEditing'
-import { setEditFormState, fetchOrUpdateEditForm } from '../../utils/features/nameEditing'
+import { setEditFormState, fetchOrUpdateEditForm } from '../../utils/features/editNameForm'
 import Account from '../../sections/Account'
+import EditNameInput from '../../components/EditNameInput'
 import '../../styles/Profile.css'
 
 function Profile ({ accountData }) {
@@ -15,7 +15,7 @@ function Profile ({ accountData }) {
 
     
     const dispatch = useDispatch();
-    const nameEditing = useSelector(selectNameEditing);
+    const nameEditing = useSelector(selectEditNameForm);
     //console.log(nameEditing.editFormIsOpen)
     const editFormIsOpen = nameEditing.editFormIsOpen
    // console.log(editFormIsOpen)
@@ -23,6 +23,8 @@ function Profile ({ accountData }) {
     const login = useSelector(selectLogin);
     const token =  login.token
     const store = useStore()
+
+    
 
     useEffect(() => {
         document.title = 'Argent Bank - Profile Page';
@@ -49,26 +51,8 @@ function Profile ({ accountData }) {
                 <h1>Welcome back</h1>
                 <form>
                     <div className='form-inputs'>
-                        <div className="input-wrapper">
-                            <label htmlFor="userFirstname" className="sr-only">Firstname</label>
-                            <input
-                                type="text"
-                                id="userFirstname"
-                                placeholder="Firstname"
-                                defaultValue={nameEditing.firstName}
-                                onChange={(e) => dispatch(setInputValueFirstName(e.target.value, e.target.id))}
-                                />
-                        </div>
-                        <div className="input-wrapper">
-                            <label htmlFor="userLastname" className="sr-only">Lastname</label>
-                            <input
-                                type="text"
-                                id="userLastname"
-                                placeholder="Lastname"
-                                defaultValue={nameEditing.lastName}
-                                onChange={(e) => dispatch(setInputValueLastName(e.target.value, e.target.id))}
-                                />
-                        </div>
+                        <EditNameInput id={'firstname'} />
+                        <EditNameInput id={'lastname'} />
                     </div>
                     <div className='form-buttons'>
                         <button
@@ -77,7 +61,7 @@ function Profile ({ accountData }) {
                                     firstName: nameEditing.firstName,
                                     lastName: nameEditing.lastName,
                                 }
-                                console.log(editNameData)
+                                console.log('editNameData',editNameData)
                                 fetchOrUpdateEditForm(store, token, editNameData)
                                 if (login.status === 'resolved') {
                                     dispatch(setEditFormState())

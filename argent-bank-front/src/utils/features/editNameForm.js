@@ -1,5 +1,5 @@
 import produce from 'immer'
-import { selectNameEditing } from '../selectors'
+import { selectEditNameForm } from '../selectors'
 import {  } from '../selectors'
 
 const initialState = {
@@ -18,8 +18,14 @@ const RESOLVED = 'nameEditing/resolved'
 const REJECTED = 'nameEditing/rejected'
 const SIGN_OUT = 'nameEditing/signOut'
 
-export const setInputValueFirstName = (firstName, id) => ({ type: SET_INPUT_VALUE, payload: firstName, id: id })
-export const setInputValueLastName = (lastName, id) => ({ type: SET_INPUT_VALUE, payload: lastName, id: id })
+export const setInputValue = (formEntry, value) => ({
+    type: SET_INPUT_VALUE,
+    payload: {
+        formEntry: formEntry,
+        value: value,
+    }
+})
+
 export const setEditFormState = () => ({ type: IS_OPEN })
 const nameEditingFetching = () => ({ type: FETCHING })
 const nameEditingResolved = (data) => ({ type: RESOLVED, payload: data })
@@ -27,7 +33,7 @@ const nameEditingRejected = (message) => ({ type: REJECTED, payload: message })
 export const nameEditingSignOut = () => ({ type: SIGN_OUT})
 
 export async function fetchOrUpdateEditForm(store, token, editNameData) {
-    const status = selectNameEditing(store.getState()).status
+    const status = selectEditNameForm(store.getState()).status
     // if request is pending or updating, stop the action to avoid double request
     if (status === 'pending' || status === 'updating') {
         return;
@@ -61,64 +67,66 @@ export async function fetchOrUpdateEditForm(store, token, editNameData) {
     }  
 }
 
-export default function nameEditingReducer(state = initialState, action) {
+export default function editNameFormReducer(state = initialState, action) {
     return produce(state, draft => {
-        if (action.type === IS_OPEN) {
-            draft.firstName = ''
-            draft.lastName = ''
-            draft.editFormIsOpen = !draft.editFormIsOpen
-        }
-        if (action.type === SIGN_OUT) {
-            draft.firstName = ''
-            draft.lastName = ''
-            draft.editFormIsOpen = false
-        } 
-        if (action.type === FETCHING) {
-            if (draft.status === 'void') {
-                draft.status = 'pending'
+        switch (action.type) {
+            case FETCHING: {
+                if (draft.status === 'void') {
+                    draft.status = 'pending'
+                    return
+                }
+                if (draft.status === 'rejected') {
+                    draft.error = null
+                    draft.status = 'pending'
+                    return
+                }
+                if (draft.status === 'resolved') {
+                    draft.status = 'updating'
+                    return
+                }
                 return
             }
-            if (draft.status === 'rejected') {
-                draft.error = null
-                draft.status = 'pending'
+            case RESOLVED: {
+                if(draft.status === 'pending' || draft.status === 'updating') {
+                    draft.data = action.payload
+                    draft.status = 'resolved'
+                    return
+                }
                 return
             }
-            if (draft.status === 'resolved') {
-                draft.status = 'updating'
+            case REJECTED: {
+                if (draft.status === 'pending' || draft.status === 'updating') {
+                    draft.error = action.payload
+                    draft.data = null
+                    draft.status = 'rejected'
+                    return
+                }
                 return
             }
-            return;
-        }
-        if (action.type === RESOLVED) {
-            if(draft.status === 'pending' || draft.status === 'updating') {
-                draft.data = action.payload
-                draft.status = 'resolved'
+            case IS_OPEN: {
+                draft.firstName = ''
+                draft.lastName = ''
+                draft.editFormIsOpen = !draft.editFormIsOpen
                 return
             }
-            return;
-        }
-        if (action.type === REJECTED) {
-            if (draft.status === 'pending' || draft.status === 'updating') {
-                draft.error = action.payload
+            case SET_INPUT_VALUE: {
+                const formEntry = action.payload.formEntry;
+                draft[formEntry] = action.payload.value
+                return
+            }
+            case SIGN_OUT: {
+                draft.firstName = ''
+                draft.lastName = ''
+                draft.editFormIsOpen = false
+                draft.status = 'void'
                 draft.data = null
-                draft.status = 'rejected'
+                draft.error = null
                 return
             }
-            return;
+            default:
+                return
         }
-        else {
-            switch (action.id) {
-                case "userFirstname": {
-                    draft.firstName = action.payload
-                    return
-                }
-                case "userLastname": {
-                    draft.lastName = action.payload
-                    return
-                }
-                default:
-                    return
-            }
-        }
+        
+        
     })
 }

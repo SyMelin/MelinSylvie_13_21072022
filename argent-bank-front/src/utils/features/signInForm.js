@@ -20,13 +20,19 @@ export const signInSignOut = () => ({ type: SIGN_OUT})
 
 export default function loginReducer(state = initialState, action) {
     return produce(state, draft => {
-        if (action.type === SIGN_OUT) {
-            draft.email = ''
-            draft.password = ''
-        }
-        if (action.type === SET_INPUT_VALUE) {
-            const id = action.payload.id;
-            draft[id] = action.payload.value
+        switch (action.type) {
+            case SET_INPUT_VALUE: {
+                const id = action.payload.id;
+                draft[id] = action.payload.value
+                return
+            }
+            case SIGN_OUT: {
+                draft.email = ''
+                draft.password = ''
+                return
+            }
+            default:
+                return
         }
     })
 }

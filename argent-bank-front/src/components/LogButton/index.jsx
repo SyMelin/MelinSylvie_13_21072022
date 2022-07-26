@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { signInSignOut } from '../../utils/features/signInForm'
 import { loginSignOut } from '../../utils/features/login'
 import { userSignOut } from '../../utils/features/user'
-import { nameEditingSignOut } from '../../utils/features/nameEditing'
+import { nameEditingSignOut } from '../../utils/features/editNameForm'
 
 function LogButton ({ userIsConnected }) {
 
