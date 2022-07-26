@@ -4,7 +4,7 @@ import { selectUser, selectLogin, selectNameEditing  } from '../../utils/selecto
 //import { editUserName } from '../../store'
 import { fetchOrUpdateUser } from '../../utils/features/user'
 import { setInputValueFirstName, setInputValueLastName } from '../../utils/features/nameEditing'
-import { setEditFormState } from '../../utils/features/nameEditing'
+import { setEditFormState, fetchOrUpdateEditForm } from '../../utils/features/nameEditing'
 import Account from '../../sections/Account'
 import '../../styles/Profile.css'
 
@@ -72,7 +72,17 @@ function Profile ({ accountData }) {
                     </div>
                     <div className='form-buttons'>
                         <button
-                            //onClick={() => {dispatch(setEditFormState())}} //To be modified
+                            onClick={() => {
+                                const editNameData = {
+                                    firstName: nameEditing.firstName,
+                                    lastName: nameEditing.lastName,
+                                }
+                                console.log(editNameData)
+                                fetchOrUpdateEditForm(store, token, editNameData)
+                                if (login.status === 'resolved') {
+                                    dispatch(setEditFormState())
+                                }
+                                }} //To be modified
                             className="form-button"
                         >
                             Save
