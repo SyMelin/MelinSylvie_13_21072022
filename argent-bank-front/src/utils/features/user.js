@@ -1,3 +1,4 @@
+import { createAction } from '@reduxjs/toolkit'
 import produce from 'immer'
 import { selectUser } from '../selectors'
 
@@ -6,7 +7,7 @@ const initialState = {
     data: null,
     error: null,
 }
-
+/*
 const FETCHING = 'user/fetching'
 const RESOLVED = 'user/resolved'
 const REJECTED = 'user/rejected'
@@ -18,6 +19,13 @@ const userResolved = (data) => ({ type: RESOLVED, payload: data })
 const userRejected = (message) => ({ type: REJECTED, payload: message })
 export const usernameUpdated = (data) => ({ type: USERNAME_UPDATED, payload: data })
 export const userSignOut = () => ({ type: SIGN_OUT})
+*/
+
+const userFetching = createAction('user/fetching')
+const userResolved = createAction('user/resolved')
+const userRejected = createAction('user/rejected')
+export const usernameUpdated = createAction('user/usernameUpdated')
+export const userSignOut = createAction('user/signOut')
 
 export async function fetchOrUpdateUser(store, token) {
     const status = selectUser(store.getState()).status
@@ -56,7 +64,7 @@ export async function fetchOrUpdateUser(store, token) {
 export default function userReducer(state = initialState, action) {
     return produce(state, draft => {
         switch (action.type) {
-            case FETCHING: {
+            case userFetching.toString(): {
                 if (draft.status === 'void') {
                     draft.status = 'pending'
                     return
@@ -72,7 +80,7 @@ export default function userReducer(state = initialState, action) {
                 }
                 return;
             }
-            case RESOLVED: {
+            case userResolved.toString(): {
                 if(draft.status === 'pending' || draft.status === 'updating') {
                     draft.data = action.payload
                     draft.status = 'resolved'
@@ -80,7 +88,7 @@ export default function userReducer(state = initialState, action) {
                 }
                 return;
             }
-            case REJECTED: {
+            case userRejected.toString(): {
                 if (draft.status === 'pending' || draft.status === 'updating') {
                     draft.error = action.payload
                     draft.data = null
@@ -89,12 +97,12 @@ export default function userReducer(state = initialState, action) {
                 }
                 return;
             }
-            case USERNAME_UPDATED: {
+            case usernameUpdated.toString(): {
                     draft.data = action.payload
                     draft.status = 'resolved'
                     return
                 }
-            case SIGN_OUT: {
+            case userSignOut.toString(): {
                 draft.status = 'void'
                 draft.data = null
                 draft.error = null
