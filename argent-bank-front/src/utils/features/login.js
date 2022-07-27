@@ -1,3 +1,4 @@
+import { createAction } from '@reduxjs/toolkit'
 import produce from 'immer'
 import { selectLogin } from '../selectors'
 
@@ -8,7 +9,7 @@ const initialState = {
     userIsConnected: false,
     error: null,
 }
-
+/*
 const FETCHING = 'login/fetching'
 const RESOLVED = 'login/resolved'
 const REJECTED = 'login/rejected'
@@ -20,6 +21,13 @@ const loginResolved = (data) => ({ type: RESOLVED, payload: data.token })
 const loginRejected = (message) => ({ type: REJECTED, payload: message })
 const connectUser = () => ({ type: CONNECT_USER })
 export const loginSignOut = () => ({ type: SIGN_OUT})
+*/
+
+const loginFetching = createAction('login/fetching')
+const loginResolved = createAction('login/resolved')
+const loginRejected = createAction('login/rejected')
+const connectUser = createAction('login/connectUser')
+export const loginSignOut = createAction('login/signOut')
 
 export async function fetchOrUpdateLogin(store, signInData) {
     const status = selectLogin(store.getState()).status
@@ -45,7 +53,7 @@ export async function fetchOrUpdateLogin(store, signInData) {
         const resJson = await response.json();
         console.log("resJson", await resJson)
         if (resJson.status === 200) {
-            store.dispatch(loginResolved(resJson.body))
+            store.dispatch(loginResolved(resJson.body.token))
             store.dispatch(connectUser())
         } else {
             store.dispatch(loginRejected(resJson.message))
@@ -58,7 +66,7 @@ export async function fetchOrUpdateLogin(store, signInData) {
 export default function loginReducer(state = initialState, action) {
     return produce(state, draft => {
         switch (action.type) {
-            case FETCHING: {
+            case loginFetching.toString(): {
                 if (draft.status === 'void') {
                     draft.status = 'pending'
                     return
@@ -74,7 +82,7 @@ export default function loginReducer(state = initialState, action) {
                 }
                 return;
             }
-            case RESOLVED: {
+            case loginResolved.toString(): {
                 if(draft.status === 'pending' || draft.status === 'updating') {
                     draft.token = action.payload
                     draft.status = 'resolved'
@@ -82,7 +90,7 @@ export default function loginReducer(state = initialState, action) {
                 }
                 return;
             }
-            case REJECTED: {
+            case loginRejected.toString(): {
                 if (draft.status === 'pending' || draft.status === 'updating') {
                     draft.error = action.payload
                     draft.token = null
@@ -91,11 +99,11 @@ export default function loginReducer(state = initialState, action) {
                 }
                 return;
             }
-            case CONNECT_USER: {
+            case connectUser.toString(): {
                 draft.userIsConnected = !draft.userIsConnected
                 return
             }
-            case SIGN_OUT: {
+            case loginSignOut.toString(): {
                 draft.status = 'void'
                 draft.token = null
                 draft.userIsConnected = false
