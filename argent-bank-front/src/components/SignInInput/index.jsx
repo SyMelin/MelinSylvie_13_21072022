@@ -10,7 +10,7 @@ function SignInInput ({ type, id }) {
 
     return (
         <div className="input-wrapper">
-            <label htmlFor={id}>Username</label>
+            <label htmlFor={id}>{`${id[0].toUpperCase()}${id.slice(1)}`}</label>
             <input
                 type={type}
                 id={id}

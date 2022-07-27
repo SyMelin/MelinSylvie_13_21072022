@@ -16,7 +16,7 @@ const SIGN_OUT = 'user/signOut'
 const userFetching = () => ({ type: FETCHING })
 const userResolved = (data) => ({ type: RESOLVED, payload: data })
 const userRejected = (message) => ({ type: REJECTED, payload: message })
-export const usernameUpdated = async (data) => ({ type: USERNAME_UPDATED, payload: await data })
+export const usernameUpdated = (data) => ({ type: USERNAME_UPDATED, payload: data })
 export const userSignOut = () => ({ type: SIGN_OUT})
 
 export async function fetchOrUpdateUser(store, token) {

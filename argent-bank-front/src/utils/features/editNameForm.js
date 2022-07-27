@@ -1,13 +1,13 @@
 import produce from 'immer'
-import { selectEditNameForm } from '../selectors'
-import {  } from '../selectors'
+import { selectEditNameForm, selectUser } from '../selectors'
+import { usernameUpdated } from './user'
 
 const initialState = {
     firstName: '',
     lastName: '',
     editFormIsOpen: false,
     status: 'void',
-    data: null,
+    //data: null,
     error: null,
 }
 
@@ -58,7 +58,9 @@ export async function fetchOrUpdateEditForm(store, token, editNameData) {
         const resJson = await response.json();
         console.log("resJson", await resJson)
         if (resJson.status === 200) {
-            store.dispatch(nameEditingResolved(resJson.body))
+            //store.dispatch(nameEditingResolved(resJson.body))
+            //const data = selectUser(store.getState()).data
+            store.dispatch(usernameUpdated(resJson.body))
         } else {
             store.dispatch(nameEditingRejected(resJson.message))
         }
@@ -88,7 +90,7 @@ export default function editNameFormReducer(state = initialState, action) {
             }
             case RESOLVED: {
                 if(draft.status === 'pending' || draft.status === 'updating') {
-                    draft.data = action.payload
+                   // draft.data = action.payload
                     draft.status = 'resolved'
                     return
                 }
@@ -97,7 +99,7 @@ export default function editNameFormReducer(state = initialState, action) {
             case REJECTED: {
                 if (draft.status === 'pending' || draft.status === 'updating') {
                     draft.error = action.payload
-                    draft.data = null
+                   // draft.data = null
                     draft.status = 'rejected'
                     return
                 }
@@ -119,7 +121,7 @@ export default function editNameFormReducer(state = initialState, action) {
                 draft.lastName = ''
                 draft.editFormIsOpen = false
                 draft.status = 'void'
-                draft.data = null
+                //draft.data = null
                 draft.error = null
                 return
             }
