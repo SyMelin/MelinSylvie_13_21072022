@@ -1,5 +1,5 @@
-import { createAction } from '@reduxjs/toolkit'
-import produce from 'immer'
+import { createAction, createReducer } from '@reduxjs/toolkit'
+//import produce from 'immer'
 import { selectEditNameForm, selectUser } from '../selectors'
 import { usernameUpdated } from './user'
 
@@ -11,29 +11,12 @@ const initialState = {
     //data: null,
     error: null,
 }
-/*
-const SET_INPUT_VALUE = 'nameEditing/setInputValue'
-const IS_OPEN = 'nameEditing/isOpen'
-const FETCHING = 'nameEditing/fetching'
-const RESOLVED = 'nameEditing/resolved'
-const REJECTED = 'nameEditing/rejected'
-const SIGN_OUT = 'nameEditing/signOut'
 
-export const setInputValue = (formEntry, value) => ({
-    type: SET_INPUT_VALUE,
-    payload: {
-        formEntry: formEntry,
-        value: value,
-    }
-})
-
-export const setEditFormState = () => ({ type: IS_OPEN })
-const nameEditingFetching = () => ({ type: FETCHING })
-const nameEditingResolved = (data) => ({ type: RESOLVED, payload: data })
-const nameEditingRejected = (message) => ({ type: REJECTED, payload: message })
-export const nameEditingSignOut = () => ({ type: SIGN_OUT})
-*/
-
+const nameEditingFetching = createAction('nameEditing/fetching')
+const nameEditingResolved = createAction('nameEditing/resolved')
+const nameEditingRejected = createAction('nameEditing/rejected')
+export const nameEditingSignOut = createAction('nameEditing/signOut')
+export const setEditFormState = createAction('nameEditing/isOpen')
 export const setInputValue = createAction('nameEditing/setInputValue', (formEntry, value) => {
     return {
         payload: {
@@ -42,12 +25,6 @@ export const setInputValue = createAction('nameEditing/setInputValue', (formEntr
         }
     }
 })
-
-export const setEditFormState = createAction('nameEditing/isOpen')
-const nameEditingFetching = createAction('nameEditing/fetching')
-const nameEditingResolved = createAction('nameEditing/resolved')
-const nameEditingRejected = createAction('nameEditing/rejected')
-export const nameEditingSignOut = createAction('nameEditing/signOut')
 
 export async function fetchOrUpdateEditForm(store, token, editNameData) {
     const status = selectEditNameForm(store.getState()).status
@@ -87,64 +64,58 @@ export async function fetchOrUpdateEditForm(store, token, editNameData) {
     }  
 }
 
-export default function editNameFormReducer(state = initialState, action) {
-    return produce(state, draft => {
-        switch (action.type) {
-            case nameEditingFetching.toString(): {
-                if (draft.status === 'void') {
-                    draft.status = 'pending'
-                    return
-                }
-                if (draft.status === 'rejected') {
-                    draft.error = null
-                    draft.status = 'pending'
-                    return
-                }
-                if (draft.status === 'resolved') {
-                    draft.status = 'updating'
-                    return
-                }
-                return
-            }
-            case nameEditingResolved.toString(): {
-                if(draft.status === 'pending' || draft.status === 'updating') {
-                   // draft.data = action.payload
-                    draft.status = 'resolved'
-                    return
-                }
-                return
-            }
-            case nameEditingRejected.toString(): {
-                if (draft.status === 'pending' || draft.status === 'updating') {
-                    draft.error = action.payload
-                   // draft.data = null
-                    draft.status = 'rejected'
-                    return
-                }
-                return
-            }
-            case setEditFormState.toString(): {
-                draft.firstName = ''
-                draft.lastName = ''
-                draft.editFormIsOpen = !draft.editFormIsOpen
-                return
-            }
-            case setInputValue.toString(): {
-                const formEntry = action.payload.formEntry;
-                draft[formEntry] = action.payload.value
-                return
-            }
-            case nameEditingSignOut.toString(): {
-                draft.firstName = ''
-                draft.lastName = ''
-                draft.editFormIsOpen = false
-                draft.status = 'void'
-                //draft.data = null
-                draft.error = null
-                return
-            }
-            default:
-                return
-        } 
+export default createReducer(initialState, builder => builder
+    .addCase(nameEditingFetching, (draft) => {
+        if (draft.status === 'void') {
+            draft.status = 'pending'
+            return
+        }
+        if (draft.status === 'rejected') {
+            draft.error = null
+            draft.status = 'pending'
+            return
+        }
+        if (draft.status === 'resolved') {
+            draft.status = 'updating'
+            return
+        }
+        return
     })
-}
+    .addCase(nameEditingResolved, (draft) => {
+        if(draft.status === 'pending' || draft.status === 'updating') {
+            // draft.data = action.payload
+             draft.status = 'resolved'
+             return
+         }
+         return
+    })
+    .addCase(nameEditingRejected, (draft, action) => {
+        if (draft.status === 'pending' || draft.status === 'updating') {
+            draft.error = action.payload
+           // draft.data = null
+            draft.status = 'rejected'
+            return
+        }
+        return
+    })
+    .addCase(setEditFormState, (draft) => {
+        draft.firstName = ''
+        draft.lastName = ''
+        draft.editFormIsOpen = !draft.editFormIsOpen
+        return
+    })
+    .addCase(setInputValue, (draft, action) => {
+        const formEntry = action.payload.formEntry;
+        draft[formEntry] = action.payload.value
+        return
+    })
+    .addCase(nameEditingSignOut, (draft) => {
+        draft.firstName = ''
+        draft.lastName = ''
+        draft.editFormIsOpen = false
+        draft.status = 'void'
+        //draft.data = null
+        draft.error = null
+        return
+    })
+)
