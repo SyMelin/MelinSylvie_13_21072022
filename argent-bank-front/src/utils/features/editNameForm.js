@@ -1,3 +1,4 @@
+import { createAction } from '@reduxjs/toolkit'
 import produce from 'immer'
 import { selectEditNameForm, selectUser } from '../selectors'
 import { usernameUpdated } from './user'
@@ -10,7 +11,7 @@ const initialState = {
     //data: null,
     error: null,
 }
-
+/*
 const SET_INPUT_VALUE = 'nameEditing/setInputValue'
 const IS_OPEN = 'nameEditing/isOpen'
 const FETCHING = 'nameEditing/fetching'
@@ -31,6 +32,22 @@ const nameEditingFetching = () => ({ type: FETCHING })
 const nameEditingResolved = (data) => ({ type: RESOLVED, payload: data })
 const nameEditingRejected = (message) => ({ type: REJECTED, payload: message })
 export const nameEditingSignOut = () => ({ type: SIGN_OUT})
+*/
+
+export const setInputValue = createAction('nameEditing/setInputValue', (formEntry, value) => {
+    return {
+        payload: {
+            formEntry: formEntry,
+            value: value,
+        }
+    }
+})
+
+export const setEditFormState = createAction('nameEditing/isOpen')
+const nameEditingFetching = createAction('nameEditing/fetching')
+const nameEditingResolved = createAction('nameEditing/resolved')
+const nameEditingRejected = createAction('nameEditing/rejected')
+export const nameEditingSignOut = createAction('nameEditing/signOut')
 
 export async function fetchOrUpdateEditForm(store, token, editNameData) {
     const status = selectEditNameForm(store.getState()).status
@@ -61,6 +78,7 @@ export async function fetchOrUpdateEditForm(store, token, editNameData) {
             //store.dispatch(nameEditingResolved(resJson.body))
             //const data = selectUser(store.getState()).data
             store.dispatch(usernameUpdated(resJson.body))
+            store.dispatch(nameEditingResolved())
         } else {
             store.dispatch(nameEditingRejected(resJson.message))
         }
@@ -72,7 +90,7 @@ export async function fetchOrUpdateEditForm(store, token, editNameData) {
 export default function editNameFormReducer(state = initialState, action) {
     return produce(state, draft => {
         switch (action.type) {
-            case FETCHING: {
+            case nameEditingFetching.toString(): {
                 if (draft.status === 'void') {
                     draft.status = 'pending'
                     return
@@ -88,7 +106,7 @@ export default function editNameFormReducer(state = initialState, action) {
                 }
                 return
             }
-            case RESOLVED: {
+            case nameEditingResolved.toString(): {
                 if(draft.status === 'pending' || draft.status === 'updating') {
                    // draft.data = action.payload
                     draft.status = 'resolved'
@@ -96,7 +114,7 @@ export default function editNameFormReducer(state = initialState, action) {
                 }
                 return
             }
-            case REJECTED: {
+            case nameEditingRejected.toString(): {
                 if (draft.status === 'pending' || draft.status === 'updating') {
                     draft.error = action.payload
                    // draft.data = null
@@ -105,18 +123,18 @@ export default function editNameFormReducer(state = initialState, action) {
                 }
                 return
             }
-            case IS_OPEN: {
+            case setEditFormState.toString(): {
                 draft.firstName = ''
                 draft.lastName = ''
                 draft.editFormIsOpen = !draft.editFormIsOpen
                 return
             }
-            case SET_INPUT_VALUE: {
+            case setInputValue.toString(): {
                 const formEntry = action.payload.formEntry;
                 draft[formEntry] = action.payload.value
                 return
             }
-            case SIGN_OUT: {
+            case nameEditingSignOut.toString(): {
                 draft.firstName = ''
                 draft.lastName = ''
                 draft.editFormIsOpen = false
@@ -127,8 +145,6 @@ export default function editNameFormReducer(state = initialState, action) {
             }
             default:
                 return
-        }
-        
-        
+        } 
     })
 }
