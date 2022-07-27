@@ -1,18 +1,16 @@
-import { combineReducers, createStore } from 'redux'
+import { configureStore }  from '@reduxjs/toolkit'
 import signInFormReducer from './features/signInForm'
 import loginReducer from './features/login'
 import userReducer from './features/user'
 import editNameFormReducer from './features/editNameForm'
 
-const reduxDevtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-
-// combineReducers is used to run several reducers together
-const reducer = combineReducers({
-    signInForm: signInFormReducer,
-    login: loginReducer,
-    user: userReducer,
-    editNameForm: editNameFormReducer,
+const store = configureStore ({
+    reducer: {
+        signInForm: signInFormReducer,
+        login: loginReducer,
+        user: userReducer,
+        editNameForm: editNameFormReducer,
+    }
 })
 
-// store
-export const store = createStore(reducer, reduxDevtools);
+export default store
