@@ -1,5 +1,5 @@
-import { createAction } from '@reduxjs/toolkit'
-import produce from 'immer'
+import { createAction, createReducer } from '@reduxjs/toolkit'
+//import produce from 'immer'
 import { selectLogin } from '../selectors'
 
 
@@ -9,19 +9,6 @@ const initialState = {
     userIsConnected: false,
     error: null,
 }
-/*
-const FETCHING = 'login/fetching'
-const RESOLVED = 'login/resolved'
-const REJECTED = 'login/rejected'
-const CONNECT_USER = 'login/connectUser'
-const SIGN_OUT = 'login/signOut'
-
-const loginFetching = () => ({ type: FETCHING })
-const loginResolved = (data) => ({ type: RESOLVED, payload: data.token })
-const loginRejected = (message) => ({ type: REJECTED, payload: message })
-const connectUser = () => ({ type: CONNECT_USER })
-export const loginSignOut = () => ({ type: SIGN_OUT})
-*/
 
 const loginFetching = createAction('login/fetching')
 const loginResolved = createAction('login/resolved')
@@ -63,55 +50,49 @@ export async function fetchOrUpdateLogin(store, signInData) {
     }
 }
 
-export default function loginReducer(state = initialState, action) {
-    return produce(state, draft => {
-        switch (action.type) {
-            case loginFetching.toString(): {
-                if (draft.status === 'void') {
-                    draft.status = 'pending'
-                    return
-                }
-                if (draft.status === 'rejected') {
-                    draft.error = null
-                    draft.status = 'pending'
-                    return
-                }
-                if (draft.status === 'resolved') {
-                    draft.status = 'updating'
-                    return
-                }
-                return;
-            }
-            case loginResolved.toString(): {
-                if(draft.status === 'pending' || draft.status === 'updating') {
-                    draft.token = action.payload
-                    draft.status = 'resolved'
-                    return
-                }
-                return;
-            }
-            case loginRejected.toString(): {
-                if (draft.status === 'pending' || draft.status === 'updating') {
-                    draft.error = action.payload
-                    draft.token = null
-                    draft.status = 'rejected'
-                    return
-                }
-                return;
-            }
-            case connectUser.toString(): {
-                draft.userIsConnected = !draft.userIsConnected
-                return
-            }
-            case loginSignOut.toString(): {
-                draft.status = 'void'
-                draft.token = null
-                draft.userIsConnected = false
-                draft.error = null
-                return
-            }
-            default:
-                return 
+export default createReducer(initialState, builder => builder
+    .addCase(loginFetching, (draft) => {
+        if (draft.status === 'void') {
+            draft.status = 'pending'
+            return
         }
+        if (draft.status === 'rejected') {
+            draft.error = null
+            draft.status = 'pending'
+            return
+        }
+        if (draft.status === 'resolved') {
+            draft.status = 'updating'
+            return
+        }
+        return;
     })
-}
+    .addCase(loginResolved, (draft, action) => {
+        if(draft.status === 'pending' || draft.status === 'updating') {
+            draft.token = action.payload
+            draft.status = 'resolved'
+            return
+        }
+        return;
+    })
+    .addCase(loginRejected, (draft, action) => {
+        if (draft.status === 'pending' || draft.status === 'updating') {
+            draft.error = action.payload
+            draft.token = null
+            draft.status = 'rejected'
+            return
+        }
+        return;
+    })
+    .addCase(connectUser, (draft) => {
+        draft.userIsConnected = !draft.userIsConnected
+        return
+    })
+    .addCase(loginSignOut, (draft) => {
+        draft.status = 'void'
+        draft.token = null
+        draft.userIsConnected = false
+        draft.error = null
+        return
+    })
+)
