@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { selectEditNameForm } from '../../utils/selectors'
+import { selectUser, selectEditNameForm } from '../../utils/selectors'
 import { setInputValue } from '../../utils/features/editNameForm'
 
 function EditNameInput ({ id }) {
 
     const dispatch = useDispatch()
+    const user = useSelector(selectUser)
+    //const userData = user.data
     const editNameForm = useSelector(selectEditNameForm);
     const editNameFormInput = editNameForm[id]
 
@@ -15,7 +17,12 @@ function EditNameInput ({ id }) {
                 type='text'
                 id={`user+${id[0].toUpperCase()}${id.slice(1)}`}
                 placeholder={`user${id[0].toUpperCase()}${id.slice(1)}`}
-                defaultValue=""
+                defaultValue={id === "firstname"
+                    ? user.data.firstName
+                    : id === "lastname" 
+                        ? user.data.lastName
+                        : ""
+                }
                 onChange={(e) => {
                     let formEntry = ""
                     if (id === "firstname") {

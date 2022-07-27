@@ -1,18 +1,16 @@
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectLogin, selectUser } from '../../utils/selectors'
+import LinkToProfile from '../LinkToProfile'
 import LogButton from '../LogButton'
 import logo from '../../assets/argentBankLogo.png'
 import '../../styles/Header.css'
 
 function Header () {
-    const user = useSelector(selectUser);
-    const login = useSelector(selectLogin);
+    const user = useSelector(selectUser)
+    const isResolved = user.status === 'resolved'
+    const login = useSelector(selectLogin)
     const userIsConnected = login.userIsConnected
-
-    const isRejected = login.status === 'rejected' || user.status === 'rejected'
-    const userIsLoading = user.status === 'void' || user.status === 'pending'
-    const loginIsLoading = login.status === 'void' || login.status === 'pending'
     
     return (
         <header>
@@ -27,12 +25,9 @@ function Header () {
                     />
                     <h1 className="sr-only">Argent Bank</h1>
                 </Link>
-                {!isRejected && userIsConnected && !loginIsLoading && !userIsLoading
+                { userIsConnected && isResolved
                     ? <div>
-                        <Link to="/profile" className="main-nav-item router-link">
-                            <i className="fa fa-user-circle"></i>
-                            {user.data.firstName}
-                        </Link>
+                        <LinkToProfile />
                         <LogButton userIsConnected={userIsConnected} />
                     </div>
                     : <div>

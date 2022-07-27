@@ -33,7 +33,7 @@ function Profile ({ accountData }) {
     }, [dispatch, token])
 
     if (user.status === 'rejected') {
-        return <span>Something went wrong</span>
+        return
     }
 
     const isLoading = user.status === 'void' || user.status === 'pending'
@@ -42,7 +42,7 @@ function Profile ({ accountData }) {
         return <span>Loading</span>
     }
 
-    return !isLoading ? (
+    return  user.status === 'resolved' ? (
         <main className="main bg-dark">
             {editFormIsOpen
             ? <div className="header">
