@@ -1,4 +1,4 @@
-import { createAction } from '@reduxjs/toolkit'
+import { createAction, createReducer } from '@reduxjs/toolkit'
 import produce from 'immer'
 import { selectUser } from '../selectors'
 
@@ -7,19 +7,6 @@ const initialState = {
     data: null,
     error: null,
 }
-/*
-const FETCHING = 'user/fetching'
-const RESOLVED = 'user/resolved'
-const REJECTED = 'user/rejected'
-const USERNAME_UPDATED = 'user/usernameUpdated'
-const SIGN_OUT = 'user/signOut'
-
-const userFetching = () => ({ type: FETCHING })
-const userResolved = (data) => ({ type: RESOLVED, payload: data })
-const userRejected = (message) => ({ type: REJECTED, payload: message })
-export const usernameUpdated = (data) => ({ type: USERNAME_UPDATED, payload: data })
-export const userSignOut = () => ({ type: SIGN_OUT})
-*/
 
 const userFetching = createAction('user/fetching')
 const userResolved = createAction('user/resolved')
@@ -61,55 +48,49 @@ export async function fetchOrUpdateUser(store, token) {
     }  
 }
 
-export default function userReducer(state = initialState, action) {
-    return produce(state, draft => {
-        switch (action.type) {
-            case userFetching.toString(): {
-                if (draft.status === 'void') {
-                    draft.status = 'pending'
-                    return
-                }
-                if (draft.status === 'rejected') {
-                    draft.error = null
-                    draft.status = 'pending'
-                    return
-                }
-                if (draft.status === 'resolved') {
-                    draft.status = 'updating'
-                    return
-                }
-                return;
-            }
-            case userResolved.toString(): {
-                if(draft.status === 'pending' || draft.status === 'updating') {
-                    draft.data = action.payload
-                    draft.status = 'resolved'
-                    return
-                }
-                return;
-            }
-            case userRejected.toString(): {
-                if (draft.status === 'pending' || draft.status === 'updating') {
-                    draft.error = action.payload
-                    draft.data = null
-                    draft.status = 'rejected'
-                    return
-                }
-                return;
-            }
-            case usernameUpdated.toString(): {
-                    draft.data = action.payload
-                    draft.status = 'resolved'
-                    return
-                }
-            case userSignOut.toString(): {
-                draft.status = 'void'
-                draft.data = null
-                draft.error = null
-                return
-            }
-            default:
-                return 
+export default createReducer(initialState, builder => builder
+    .addCase(userFetching, (draft) => {
+        if (draft.status === 'void') {
+            draft.status = 'pending'
+            return
         }
+        if (draft.status === 'rejected') {
+            draft.error = null
+            draft.status = 'pending'
+            return
+        }
+        if (draft.status === 'resolved') {
+            draft.status = 'updating'
+            return
+        }
+        return;
     })
-}
+    .addCase(userResolved, (draft, action) => {
+        if(draft.status === 'pending' || draft.status === 'updating') {
+            draft.data = action.payload
+            draft.status = 'resolved'
+            return
+        }
+        return;
+    })
+    .addCase(userRejected, (draft, action) => {
+        if (draft.status === 'pending' || draft.status === 'updating') {
+            draft.error = action.payload
+            draft.data = null
+            draft.status = 'rejected'
+            return
+        }
+        return;
+    })
+    .addCase(usernameUpdated, (draft, action) => {
+        draft.data = action.payload
+        draft.status = 'resolved'
+        return
+    })
+    .addCase(userSignOut, (draft) => {
+        draft.status = 'void'
+        draft.data = null
+        draft.error = null
+        return
+    })
+)
