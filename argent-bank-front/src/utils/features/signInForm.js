@@ -1,10 +1,11 @@
+import { createAction } from '@reduxjs/toolkit'
 import produce from 'immer'
 
 const initialState = {
     email: '',
     password: '',
 }
-
+/*
 const SET_INPUT_VALUE = 'signIn/setInputValue'
 const SIGN_OUT = 'signIn/signOut'
 
@@ -17,16 +18,30 @@ export const setInputValue = (id, value) => ({
 })
 
 export const signInSignOut = () => ({ type: SIGN_OUT})
+*/
+
+export const setInputValue = createAction('signInForm/setInputValue', (id, value) => {
+   return {
+        payload: {
+            id: id,
+            value: value,
+        }
+   } 
+})
+
+export const signInFormSignOut = createAction('signInForm/signOut')
+
+
 
 export default function loginReducer(state = initialState, action) {
     return produce(state, draft => {
         switch (action.type) {
-            case SET_INPUT_VALUE: {
+            case setInputValue.toString(): {
                 const id = action.payload.id;
                 draft[id] = action.payload.value
                 return
             }
-            case SIGN_OUT: {
+            case signInFormSignOut.toString(): {
                 draft.email = ''
                 draft.password = ''
                 return
