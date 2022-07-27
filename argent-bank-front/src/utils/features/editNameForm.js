@@ -26,42 +26,44 @@ export const setInputValue = createAction('nameEditing/setInputValue', (formEntr
     }
 })
 
-export async function fetchOrUpdateEditForm(store, token, editNameData) {
-    const status = selectEditNameForm(store.getState()).status
-    // if request is pending or updating, stop the action to avoid double request
-    if (status === 'pending' || status === 'updating') {
-        return;
-    }
-    // else, launch the request
-    store.dispatch(nameEditingFetching());
-    try {
-        const response = await fetch(
-            'http://localhost:3001/api/v1/user/profile',
-            {
-                // Adding method type
-                method: 'PUT',
-                // Adding headers
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(editNameData)
-            }
-        );
-       // console.log('response', response)
-        const resJson = await response.json();
-        console.log("resJson", await resJson)
-        if (resJson.status === 200) {
-            //store.dispatch(nameEditingResolved(resJson.body))
-            //const data = selectUser(store.getState()).data
-            store.dispatch(usernameUpdated(resJson.body))
-            store.dispatch(nameEditingResolved())
-        } else {
-            store.dispatch(nameEditingRejected(resJson.message))
+export function fetchOrUpdateEditForm(token, editNameData) {
+    return async (dispatch, getState) => {
+        const status = selectEditNameForm(getState()).status
+        // if request is pending or updating, stop the action to avoid double request
+        if (status === 'pending' || status === 'updating') {
+            return;
         }
-    } catch (error) {
-        store.dispatch(nameEditingRejected(error))
-    }  
+        // else, launch the request
+        dispatch(nameEditingFetching());
+        try {
+            const response = await fetch(
+                'http://localhost:3001/api/v1/user/profile',
+                {
+                    // Adding method type
+                    method: 'PUT',
+                    // Adding headers
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(editNameData)
+                }
+            );
+        // console.log('response', response)
+            const resJson = await response.json();
+            console.log("resJson", await resJson)
+            if (resJson.status === 200) {
+                //dispatch(nameEditingResolved(resJson.body))
+                //const data = selectUser(store.getState()).data
+                dispatch(usernameUpdated(resJson.body))
+                dispatch(nameEditingResolved())
+            } else {
+                dispatch(nameEditingRejected(resJson.message))
+            }
+        } catch (error) {
+            dispatch(nameEditingRejected(error))
+        }
+    }    
 }
 
 export default createReducer(initialState, builder => builder

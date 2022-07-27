@@ -1,5 +1,5 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
-import produce from 'immer'
+//import produce from 'immer'
 import { selectUser } from '../selectors'
 
 const initialState = {
@@ -14,38 +14,42 @@ const userRejected = createAction('user/rejected')
 export const usernameUpdated = createAction('user/usernameUpdated')
 export const userSignOut = createAction('user/signOut')
 
-export async function fetchOrUpdateUser(store, token) {
-    const status = selectUser(store.getState()).status
-    // if request is pending or updating, stop the action to avoid double request
-    if (status === 'pending' || status === 'updating') {
-        return;
-    }
-    // else, launch the request
-    store.dispatch(userFetching());
-    try {
-        const response = await fetch(
-            'http://localhost:3001/api/v1/user/profile',
-            {
-                // Adding method type
-                method: 'POST',
-                // Adding headers
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            }
-        );
-       // console.log('response', response)
-        const resJson = await response.json();
-        console.log("resJson", await resJson)
-        if (resJson.status === 200) {
-            store.dispatch(userResolved(resJson.body))
-        } else {
-            store.dispatch(userRejected(resJson.message))
+//thunk creator
+export function fetchOrUpdateUser(token) {
+    //return a thunk
+    return async (dispatch, getState) => {
+        const status = selectUser(getState()).status
+        // if request is pending or updating, stop the action to avoid double request
+        if (status === 'pending' || status === 'updating') {
+            return;
         }
-    } catch (error) {
-        store.dispatch(userRejected(error))
-    }  
+        // else, launch the request
+        dispatch(userFetching());
+        try {
+            const response = await fetch(
+                'http://localhost:3001/api/v1/user/profile',
+                {
+                    // Adding method type
+                    method: 'POST',
+                    // Adding headers
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            );
+        // console.log('response', response)
+            const resJson = await response.json();
+            console.log("resJson", await resJson)
+            if (resJson.status === 200) {
+                dispatch(userResolved(resJson.body))
+            } else {
+                dispatch(userRejected(resJson.message))
+            }
+        } catch (error) {
+            dispatch(userRejected(error))
+        }
+    }   
 }
 
 export default createReducer(initialState, builder => builder

@@ -10,7 +10,8 @@ function SignInContent () {
     const navigate = useNavigate()
     const signInForm = useSelector(selectSignInForm);
     const login = useSelector(selectLogin);
-    const store = useStore()
+    //const store = useStore()
+    const dispatch = useDispatch()
 
     return (
         <section className="sign-in-content">
@@ -31,7 +32,7 @@ function SignInContent () {
                         e.preventDefault()
                         const signInData = signInForm
                       //  console.log(signInData)
-                        fetchOrUpdateLogin(store, signInData);
+                        dispatch(fetchOrUpdateLogin(signInData));
                         if (login.status === 'rejected') {
                             return <span>Something went wrong</span>
                         }

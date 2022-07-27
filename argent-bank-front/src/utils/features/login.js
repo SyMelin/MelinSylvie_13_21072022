@@ -16,37 +16,41 @@ const loginRejected = createAction('login/rejected')
 const connectUser = createAction('login/connectUser')
 export const loginSignOut = createAction('login/signOut')
 
-export async function fetchOrUpdateLogin(store, signInData) {
-    const status = selectLogin(store.getState()).status
-    // if request is pending or updating, stop the action to avoid double request
-    if (status === 'pending' || status === 'updating') {
-        return;
-    }
-    // else, launch the request
-    store.dispatch(loginFetching());
-    try {
-        const response = await fetch(
-            'http://localhost:3001/api/v1/user/login',
-            {
-                // Adding method type
-                method: 'POST',
-                // Adding headers
-                headers: { 'Content-Type': 'application/json' },
-                // Adding body or contents to send
-                body: JSON.stringify(signInData)
-            }
-        );
-        //console.log('response', response)
-        const resJson = await response.json();
-        console.log("resJson", await resJson)
-        if (resJson.status === 200) {
-            store.dispatch(loginResolved(resJson.body.token))
-            store.dispatch(connectUser())
-        } else {
-            store.dispatch(loginRejected(resJson.message))
+//thunk creator
+export function fetchOrUpdateLogin(signInData) {
+    //return a thunk
+    return async (dispatch, getState) => {
+        const status = selectLogin(getState()).status
+        // if request is pending or updating, stop the action to avoid double request
+        if (status === 'pending' || status === 'updating') {
+            return;
         }
-    } catch (error) {
-        store.dispatch(loginRejected(error))
+        // else, launch the request
+        dispatch(loginFetching());
+        try {
+            const response = await fetch(
+                'http://localhost:3001/api/v1/user/login',
+                {
+                    // Adding method type
+                    method: 'POST',
+                    // Adding headers
+                    headers: { 'Content-Type': 'application/json' },
+                    // Adding body or contents to send
+                    body: JSON.stringify(signInData)
+                }
+            );
+            //console.log('response', response)
+            const resJson = await response.json();
+            console.log("resJson", await resJson)
+            if (resJson.status === 200) {
+                dispatch(loginResolved(resJson.body.token))
+                dispatch(connectUser())
+            } else {
+                dispatch(loginRejected(resJson.message))
+            }
+        } catch (error) {
+            dispatch(loginRejected(error))
+        }
     }
 }
 

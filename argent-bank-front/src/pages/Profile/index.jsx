@@ -22,15 +22,15 @@ function Profile ({ accountData }) {
     const user = useSelector(selectUser);
     const login = useSelector(selectLogin);
     const token =  login.token
-    const store = useStore()
+    //const store = useStore()
 
     useEffect(() => {
         document.title = 'Argent Bank - Profile Page';
     })
 
     useEffect (() => {
-        fetchOrUpdateUser(store, token);
-    }, [store, token])
+        dispatch(fetchOrUpdateUser(token))
+    }, [dispatch, token])
 
     if (user.status === 'rejected') {
         return <span>Something went wrong</span>
@@ -61,7 +61,7 @@ function Profile ({ accountData }) {
                                     lastName: nameEditing.lastName,
                                 }
                                 console.log('editNameData', editNameData)
-                                fetchOrUpdateEditForm(store, token, editNameData)
+                                dispatch(fetchOrUpdateEditForm(token, editNameData))
                                // if (login.status === 'resolved') {
                                //     dispatch(setEditFormState())
                                     
