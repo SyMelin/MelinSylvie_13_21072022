@@ -10,12 +10,19 @@ import '../../styles/Profile.css'
 function Profile ({ accountData }) {
     
     const dispatch = useDispatch();
-    const nameEditing = useSelector(selectEditNameForm);
-    const editFormIsOpen = nameEditing.editFormIsOpen
+    const editNameForm = useSelector(selectEditNameForm);
+    const editFormIsOpen = editNameForm.editFormIsOpen
     const user = useSelector(selectUser);
     const login = useSelector(selectLogin);
     const token =  login.token
     //const store = useStore()
+
+    function sendNameData (token) {
+        if (!(editNameForm.editNameData.firstName === user.data.firstName) || !(editNameForm.editNameData.lastName === user.data.lastName)) {
+            dispatch(fetchOrUpdateUserNameData(token, editNameForm.editNameData))
+        }
+        dispatch(setEditFormState()) 
+    }
 
     useEffect(() => {
         document.title = 'Argent Bank - Profile Page';
@@ -49,13 +56,7 @@ function Profile ({ accountData }) {
                         <button
                             onClick={(e) => {
                                 e.preventDefault()
-                                const editNameData = {
-                                    firstName: nameEditing.firstName,
-                                    lastName: nameEditing.lastName,
-                                }
-                                console.log('editNameData', editNameData)
-                                dispatch(fetchOrUpdateUserNameData(token, editNameData))
-                                dispatch(setEditFormState())
+                               sendNameData(token)
                                 }} //To be modified
                             className="form-button"
                         >

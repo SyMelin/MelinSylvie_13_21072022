@@ -1,9 +1,14 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
 //import produce from 'immer'
+import { useDispatch, useSelector, useStore } from 'react-redux'
+import { selectUser, selectEditNameForm } from '../selectors'
+import { fetchOrUpdateUserNameData } from './user'
 
 const initialState = {
-    firstName: '',
-    lastName: '',
+    editNameData: {
+        firstName: '',
+        lastName: '',
+    },
     editFormIsOpen: false,
 }
 
@@ -18,6 +23,22 @@ export const setInputValue = createAction('nameEditing/setInputValue', (formEntr
     }
 })
 
+export function sendNameData(token) {
+    console.log('clic1')
+    return (dispatch, getState) => {
+        console.log('clic2')
+        const user = selectUser(getState()).user
+        const nameEditing = selectEditNameForm(getState())
+        console.log(!(nameEditing.firstName === user.data.firstName))
+        if (!(nameEditing.firstName === user.data.firstName) || !(nameEditing.lastName === user.data.lastName)) {
+            console.log('editNameData', nameEditing.editNameData)
+            dispatch(fetchOrUpdateUserNameData(token, nameEditing.editNameData))
+        }
+        dispatch(setEditFormState()) 
+    }
+   
+    }
+
 export default createReducer(initialState, builder => builder
     .addCase(setEditFormState, (draft) => {
         draft.firstName = ''
@@ -27,7 +48,7 @@ export default createReducer(initialState, builder => builder
     })
     .addCase(setInputValue, (draft, action) => {
         const formEntry = action.payload.formEntry;
-        draft[formEntry] = action.payload.value
+        draft.editNameData[formEntry] = action.payload.value
         return
     })
     .addCase(nameEditingSignOut, (draft) => {

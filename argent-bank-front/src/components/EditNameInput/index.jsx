@@ -7,16 +7,18 @@ function EditNameInput ({ id }) {
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
     //const userData = user.data
-    const editNameForm = useSelector(selectEditNameForm);
-    const editNameFormInput = editNameForm[id]
+    //const editNameForm = useSelector(selectEditNameForm);
+    //const editNameFormInput = editNameForm[id]
+
+    const firstLetterToUppercase = (string) => (`${string[0].toUpperCase()}${string.slice(1)}`)
 
     return (
         <div className="input-wrapper">
-            <label htmlFor={`user${id[0].toUpperCase()}${id.slice(1)}`} className="sr-only">{id[0].toUpperCase() + id.slice(1)}</label>
+            <label htmlFor={`user${firstLetterToUppercase(id)}`} className="sr-only">{firstLetterToUppercase(id)}</label>
             <input
                 type='text'
-                id={`user+${id[0].toUpperCase()}${id.slice(1)}`}
-                placeholder={`user${id[0].toUpperCase()}${id.slice(1)}`}
+                id={`user+${firstLetterToUppercase(id)}`}
+                placeholder={`${firstLetterToUppercase(id)}`}
                 defaultValue={id === "firstname"
                     ? user.data.firstName
                     : id === "lastname" 
