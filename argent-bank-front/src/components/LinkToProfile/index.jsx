@@ -13,11 +13,7 @@ function LinkToProfile () {
 
     if (isLoading) {
         return
-    } else {
-        //console.log(user.data.firstName)
     }
-
-    //const firstname = user.data?.firstName
 
     return  (
         <Link
@@ -25,6 +21,7 @@ function LinkToProfile () {
             className="main-nav-item router-link"
         >
             <i className="fa fa-user-circle"></i>
+            {user.data.firstName}
         </Link>
     )
 }

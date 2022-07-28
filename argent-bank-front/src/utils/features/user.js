@@ -11,7 +11,7 @@ const initialState = {
 const userFetching = createAction('user/fetching')
 const userResolved = createAction('user/resolved')
 const userRejected = createAction('user/rejected')
-export const usernameUpdated = createAction('user/usernameUpdated')
+export const userChangingName = createAction('user/userChangingName')
 export const userSignOut = createAction('user/signOut')
 
 //thunk creator
@@ -52,6 +52,43 @@ export function fetchOrUpdateUser(token) {
     }   
 }
 
+export function fetchOrUpdateUserNameData(token, editNameData) {
+    return async (dispatch, getState) => {
+        const status = selectUser(getState()).status
+        // if request is pending or updating, stop the action to avoid double request
+        if (status === 'pending' || status === 'updating') {
+            return;
+        }
+        // else, launch the request
+        dispatch(userFetching());
+        try {
+            const response = await fetch(
+                'http://localhost:3001/api/v1/user/profile',
+                {
+                    // Adding method type
+                    method: 'PUT',
+                    // Adding headers
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(editNameData)
+                }
+            );
+        // console.log('response', response)
+            const resJson = await response.json();
+            console.log("resJson", await resJson)
+            if (resJson.status === 200) {
+                dispatch(userResolved(resJson.body))
+            } else {
+                dispatch(userRejected(resJson.message))
+            }
+        } catch (error) {
+            dispatch(userRejected(error))
+        }
+    }    
+}
+
 export default createReducer(initialState, builder => builder
     .addCase(userFetching, (draft) => {
         if (draft.status === 'void') {
@@ -86,7 +123,7 @@ export default createReducer(initialState, builder => builder
         }
         return;
     })
-    .addCase(usernameUpdated, (draft, action) => {
+    .addCase(userChangingName, (draft, action) => {
         draft.data = action.payload
         draft.status = 'resolved'
         return

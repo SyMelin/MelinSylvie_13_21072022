@@ -1,24 +1,17 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import { selectUser, selectLogin, selectEditNameForm  } from '../../utils/selectors'
-//import { editUserName } from '../../store'
-import { fetchOrUpdateUser, usernameUpdated } from '../../utils/features/user'
-import { setEditFormState, fetchOrUpdateEditForm } from '../../utils/features/editNameForm'
+import { fetchOrUpdateUser, fetchOrUpdateUserNameData } from '../../utils/features/user'
+import { setEditFormState } from '../../utils/features/editNameForm'
 import Account from '../../sections/Account'
 import EditNameInput from '../../components/EditNameInput'
 import '../../styles/Profile.css'
 
 function Profile ({ accountData }) {
-    //const userFirstname = "Tony"
-    //const userLastname = "Jarvis"
-    //const userName = userFirstname + " " + userLastname
-
     
     const dispatch = useDispatch();
     const nameEditing = useSelector(selectEditNameForm);
-    //console.log(nameEditing.editFormIsOpen)
     const editFormIsOpen = nameEditing.editFormIsOpen
-   // console.log(editFormIsOpen)
     const user = useSelector(selectUser);
     const login = useSelector(selectLogin);
     const token =  login.token
@@ -61,19 +54,8 @@ function Profile ({ accountData }) {
                                     lastName: nameEditing.lastName,
                                 }
                                 console.log('editNameData', editNameData)
-                                dispatch(fetchOrUpdateEditForm(token, editNameData))
-                               // if (login.status === 'resolved') {
-                               //     dispatch(setEditFormState())
-                                    
-                               // }
-                               dispatch(setEditFormState())
-                              // console.log(nameEditing.firstName)
-                              // console.log('rep', nameEditing.data)
-                                 dispatch(usernameUpdated(nameEditing.data))
-                                if (nameEditing.status === 'resolved') {
-                                    console.log("Hello")
-                                    //dispatch(usernameUpdated(nameEditing.data))
-                                }
+                                dispatch(fetchOrUpdateUserNameData(token, editNameData))
+                                dispatch(setEditFormState())
                                 }} //To be modified
                             className="form-button"
                         >
