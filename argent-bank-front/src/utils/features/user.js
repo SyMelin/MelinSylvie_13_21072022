@@ -53,6 +53,7 @@ export function fetchOrUpdateUser(token) {
 }
 
 export function fetchOrUpdateUserNameData(token, editNameData) {
+    console.log('dans fetch', editNameData )
     return async (dispatch, getState) => {
         const status = selectUser(getState()).status
         // if request is pending or updating, stop the action to avoid double request

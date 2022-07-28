@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectUser, selectEditNameForm } from '../../utils/selectors'
 import { setInputValue } from '../../utils/features/editNameForm'
@@ -6,11 +7,12 @@ function EditNameInput ({ id }) {
 
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
-    //const userData = user.data
-    //const editNameForm = useSelector(selectEditNameForm);
-    //const editNameFormInput = editNameForm[id]
-
     const firstLetterToUppercase = (string) => (`${string[0].toUpperCase()}${string.slice(1)}`)
+
+    useEffect (() => {
+        dispatch(setInputValue('firstName', user.data.firstName))
+        dispatch(setInputValue('lastName', user.data.lastName))
+    }, [dispatch, user])
 
     return (
         <div className="input-wrapper">
