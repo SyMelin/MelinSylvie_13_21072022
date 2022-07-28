@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import { selectUser, selectLogin, selectEditNameForm  } from '../../utils/selectors'
-import { fetchOrUpdateUser, fetchOrUpdateUserNameData } from '../../utils/features/user'
-import { setEditFormState } from '../../utils/features/editNameForm'
+import { fetchOrUpdateUser } from '../../utils/features/user'
+import { setEditFormState, sendNameData } from '../../utils/features/editNameForm'
 import AccountSection from '../../components/AccountSection'
 import EditNameInput from '../../components/EditNameInput'
 import '../../styles/Profile.css'
@@ -15,14 +15,7 @@ function Profile ({ accountData }) {
     const user = useSelector(selectUser);
     const login = useSelector(selectLogin);
     const token =  login.token
-    //const store = useStore()
-
-    function sendNameData (token) {
-        if (!(editNameForm.editNameData.firstName === user.data.firstName) || !(editNameForm.editNameData.lastName === user.data.lastName)) {
-            dispatch(fetchOrUpdateUserNameData(token, editNameForm.editNameData))
-        }
-        dispatch(setEditFormState()) 
-    }
+    const store = useStore()
 
     useEffect(() => {
         document.title = 'Argent Bank - Profile Page';
@@ -56,14 +49,15 @@ function Profile ({ accountData }) {
                         <button
                             onClick={(e) => {
                                 e.preventDefault()
-                               sendNameData(token)
-                                }} //To be modified
+                                //console.log('AVANT sendNameData ', editNameForm.editNameData)
+                                sendNameData(store, token)
+                            }}
                             className="form-button"
                         >
                             Save
                         </button>
                         <button
-                            onClick={() => {dispatch(setEditFormState())}} //To be modified
+                            onClick={() => {dispatch(setEditFormState())}}
                             className="form-button"
                         >
                             Cancel
@@ -74,7 +68,7 @@ function Profile ({ accountData }) {
             : <div className="header">
                 <h1>Welcome back<br />{user.data.firstName + " " + user.data.lastName}!</h1>
                 <button
-                    onClick={() => {dispatch(setEditFormState())}} //To be modified
+                    onClick={() => {dispatch(setEditFormState())}}
                     className="edit-button"
                 >
                     Edit Name
