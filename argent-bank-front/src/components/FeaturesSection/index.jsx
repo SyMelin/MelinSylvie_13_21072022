@@ -1,7 +1,7 @@
-import FeatureItem from '../../components/FeatureItem'
+import FeatureItem from '../FeatureItem'
 import '../../styles/Features.css'
 
-function Features ({ featureItems }) {
+function FeaturesSection ({ featureItems }) {
     return (
         <section className="features">
             <h2 className="sr-only">Features</h2>
@@ -15,4 +15,4 @@ function Features ({ featureItems }) {
     )
 }
 
-export default Features
+export default FeaturesSection

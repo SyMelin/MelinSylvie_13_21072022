@@ -1,6 +1,6 @@
 import '../../styles/Account.css'
 
-function Account ({ account }) {
+function AccountSection ({ account }) {
     return (
         <section className="account">
             <div className="account-content-wrapper">
@@ -15,4 +15,4 @@ function Account ({ account }) {
     )
 }
 
-export default Account
+export default AccountSection

@@ -3,7 +3,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux'
 import { selectUser, selectLogin, selectEditNameForm  } from '../../utils/selectors'
 import { fetchOrUpdateUser, fetchOrUpdateUserNameData } from '../../utils/features/user'
 import { setEditFormState } from '../../utils/features/editNameForm'
-import Account from '../../sections/Account'
+import AccountSection from '../../components/AccountSection'
 import EditNameInput from '../../components/EditNameInput'
 import '../../styles/Profile.css'
 
@@ -82,7 +82,7 @@ function Profile ({ accountData }) {
             }
             <h2 className="sr-only">Accounts</h2>
             {accountData.map((account, index) => (
-                <Account
+                <AccountSection
                     key={`accountData--${index}`}
                     account={account}
                 />

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 
-import SignInContent from '../../sections/SignInContent'
+import SignInContentSection from '../../components/SignInContentSection'
 import '../../styles/Login.css'
 
 function Login () {
@@ -13,7 +13,7 @@ function Login () {
 
     return (
         <main className="main bg-dark">
-            <SignInContent />
+            <SignInContentSection />
         </main>
     )
 }

@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import { fetchOrUpdateLogin } from '../../utils/features/login'
 import { selectSignInForm, selectLogin } from '../../utils/selectors'
-import SignInInput from '../../components/SignInInput'
+import SignInInput from '../SignInInput'
 import '../../styles/SignInContent.css'
 
-function SignInContent () {
+function SignInContentSection () {
 
     const navigate = useNavigate()
     const signInForm = useSelector(selectSignInForm);
@@ -47,4 +47,4 @@ function SignInContent () {
     )
 }
 
-export default SignInContent
+export default SignInContentSection
