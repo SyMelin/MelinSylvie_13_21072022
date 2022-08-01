@@ -1,10 +1,7 @@
-//NOT WORKING
-
-/*
 import EditNameInput from '../../components/EditNameInput'
 import EditNameFormButton from '../../components/EditNameFormButton'
 
-function EditNameForm({ store, token }) {
+function EditNameForm() {
     return (
         <form>
             <div className='form-inputs'>
@@ -16,8 +13,6 @@ function EditNameForm({ store, token }) {
                     type="sendEditedData"
                     className="form-button"
                     children="Save"
-                    store={store}
-                    token={token}
                 />
                 <EditNameFormButton
                     type="cancelEdit"
@@ -30,4 +25,3 @@ function EditNameForm({ store, token }) {
 }
 
 export default EditNameForm
-*/

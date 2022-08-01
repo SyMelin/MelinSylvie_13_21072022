@@ -1,10 +1,9 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector, useStore } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectUser, selectLogin, selectEditNameForm  } from '../../utils/selectors'
 import { fetchOrUpdateUser } from '../../utils/features/user'
 import AccountSection from '../../components/AccountSection'
-//import EditNameForm from '../../components/editNameForm'
-import EditNameInput from '../../components/EditNameInput'
+import EditNameForm from '../../components/EditNameForm'
 import EditNameFormButton from '../../components/EditNameFormButton'
 import '../../styles/Profile.css'
 
@@ -16,7 +15,6 @@ function Profile ({ accountData }) {
     const user = useSelector(selectUser);
     const login = useSelector(selectLogin);
     const token =  login.token
-    const store = useStore()
 
     useEffect(() => {
         document.title = 'Argent Bank - Profile Page';
@@ -41,26 +39,7 @@ function Profile ({ accountData }) {
             {editNameFormIsOpen
             ? <div className="header">
                 <h1>Welcome back</h1>
-                <form>
-                    <div className='form-inputs'>
-                        <EditNameInput id={'firstname'} />
-                        <EditNameInput id={'lastname'} />
-                    </div>
-                    <div className='form-buttons'>
-                        <EditNameFormButton
-                            type="sendEditedData"
-                            className="form-button"
-                            children="Save"
-                            store={store}
-                            token={token}
-                        />
-                        <EditNameFormButton
-                            type="cancelEdit"
-                            className="form-button"
-                            children="Cancel"
-                        />
-                    </div>
-                </form>
+                <EditNameForm />
             </div>
             : <div className="header">
                 <h1>
@@ -89,30 +68,3 @@ function Profile ({ accountData }) {
 }
 
 export default Profile
-
-/*
-<button
-    onClick={() => {dispatch(setEditNameFormState())}}
-    className="edit-button"
->
-    Edit Name
-</button>
-
-<button
-    onClick={() => {dispatch(setEditNameFormState())}}
-    className="form-button"
->
-    Cancel
-</button>
-
-<button
-    onClick={(e) => {
-        e.preventDefault()
-        //console.log('AVANT sendNameData ', editNameForm.editNameData)
-        sendNameData(store, token)
-    }}
-    className="form-button"
->
-    Save
-</button>
-*/
