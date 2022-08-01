@@ -1,6 +1,6 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
 //import produce from 'immer'
-import { selectLogin } from '../selectors'
+import { selectLogin, selectSignInForm } from '../selectors'
 
 
 const initialState = {
@@ -16,8 +16,23 @@ const loginRejected = createAction('login/rejected')
 const connectUser = createAction('login/connectUser')
 export const loginSignOut = createAction('login/signOut')
 
+
+export function sendSignInFormData(e, navigate) {
+    e.preventDefault()
+    return async (dispatch, getState) => {
+        const signInFormData = selectSignInForm(getState())
+        dispatch(fetchOrUpdateLogin(signInFormData));
+        const status = selectLogin(getState()).status
+        if (status === 'rejected') {
+            return <span>Something went wrong</span>
+        }
+        return navigate("/profile", {replace:true})
+    }
+}
+
+
 //thunk creator
-export function fetchOrUpdateLogin(signInData) {
+export function fetchOrUpdateLogin(signInFormData) {
     //return a thunk
     return async (dispatch, getState) => {
         const status = selectLogin(getState()).status
@@ -36,7 +51,7 @@ export function fetchOrUpdateLogin(signInData) {
                     // Adding headers
                     headers: { 'Content-Type': 'application/json' },
                     // Adding body or contents to send
-                    body: JSON.stringify(signInData)
+                    body: JSON.stringify(signInFormData)
                 }
             );
             //console.log('response', response)
@@ -53,6 +68,7 @@ export function fetchOrUpdateLogin(signInData) {
         }
     }
 }
+
 
 export default createReducer(initialState, builder => builder
     .addCase(loginFetching, (draft) => {
