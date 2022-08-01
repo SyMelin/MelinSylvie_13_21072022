@@ -52,8 +52,8 @@ export function fetchOrUpdateUser(token) {
     }   
 }
 
-export function fetchOrUpdateUserNameData(token, editNameData) {
-    console.log('dans fetch', editNameData )
+export function fetchOrUpdateUserNameData(token, formData) {
+    console.log('dans fetch', formData )
     return async (dispatch, getState) => {
         const status = selectUser(getState()).status
         // if request is pending or updating, stop the action to avoid double request
@@ -73,7 +73,7 @@ export function fetchOrUpdateUserNameData(token, editNameData) {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify(editNameData)
+                    body: JSON.stringify(formData)
                 }
             );
         // console.log('response', response)

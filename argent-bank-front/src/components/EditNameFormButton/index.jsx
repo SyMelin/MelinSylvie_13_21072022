@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { setEditNameFormState, sendNameData } from '../../utils/features/editNameForm'
 import '../../styles/EditNameFormButton.css'
 
-function EditNameFormButton({ type, className, children, store, token }) {
+function EditNameFormButton({ type, className, children }) {
 
     const dispatch = useDispatch()
 
@@ -10,9 +10,9 @@ function EditNameFormButton({ type, className, children, store, token }) {
         <button
             onClick={(e) => {
                 e.preventDefault()
-                //console.log('AVANT sendNameData ', editNameForm.editNameData)
+                //console.log('AVANT sendNameData ', editNameForm.formData)
                 if (type === 'sendEditedData') {
-                    sendNameData(store, token)
+                    dispatch(sendNameData(e))
                 }
                 else {
                     dispatch(setEditNameFormState())

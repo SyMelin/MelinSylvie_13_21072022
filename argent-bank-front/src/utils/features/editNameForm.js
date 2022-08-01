@@ -1,10 +1,10 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
 //import produce from 'immer'
-import { selectUser, selectEditNameForm } from '../selectors'
+import { selectUser, selectEditNameForm, selectLogin } from '../selectors'
 import { fetchOrUpdateUserNameData } from './user'
 
 const initialState = {
-    editNameData: {
+        formData: {
         firstName: '',
         lastName: '',
     },
@@ -22,36 +22,40 @@ export const setInputValue = createAction('nameEditing/setInputValue', (formEntr
     }
 })
 
-export function sendNameData(store, token) {
-    const editNameForm = selectEditNameForm(store.getState())
-    const user = selectUser(store.getState())
-    //console.log('editData: ', editNameForm.editNameData, 'userData: ', user.data)
-    if ((editNameForm.editNameData.firstName === "") || (editNameForm.editNameData.lastName === "")) {
-        console.log("l'un des 2 est vide")
-        return
+
+export function sendNameData (e) {
+    e.preventDefault()
+    return (dispatch, getState) => {
+        const editNameFormData = selectEditNameForm(getState()).formData
+        const userData = selectUser(getState()).data
+        const token = selectLogin(getState()).token
+        // If at least one of the inputs is empty, nothing happens
+        if ((editNameFormData.firstName === "") || (editNameFormData.lastName === "")) {
+            console.log("l'un des 2 est vide")
+            return
+        }
+        if (!(editNameFormData.firstName === userData.firstName) || !(editNameFormData.lastName === userData.lastName)) {
+            dispatch(fetchOrUpdateUserNameData(token, editNameFormData))
+        }
+        dispatch(setEditNameFormState()) 
     }
-    if (!(editNameForm.editNameData.firstName === user.data.firstName) || !(editNameForm.editNameData.lastName === user.data.lastName)) {
-       // console.log('dans if de sendNameData', editNameForm.editNameData)
-        store.dispatch(fetchOrUpdateUserNameData(token, editNameForm.editNameData))
-    }
-    store.dispatch(setEditNameFormState()) 
 }
 
 export default createReducer(initialState, builder => builder
     .addCase(setEditNameFormState, (draft) => {
-        draft.editNameData.firstName = null
-        draft.editNameData.lastName = null
+        draft.formData.firstName = null
+        draft.formData.lastName = null
         draft.editNameFormIsOpen = !draft.editNameFormIsOpen
         return
     })
     .addCase(setInputValue, (draft, action) => {
         const formEntry = action.payload.formEntry
-        draft.editNameData[formEntry] = action.payload.value
+        draft.formData[formEntry] = action.payload.value
         return
     })
     .addCase(nameEditingSignOut, (draft) => {
-        draft.editNameData.firstName = null
-        draft.editNameData.lastName = null
+        draft.formData.firstName = null
+        draft.formData.lastName = null
         draft.editNameFormIsOpen = false
         return
     })
