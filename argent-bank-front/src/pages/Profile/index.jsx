@@ -5,6 +5,7 @@ import { fetchOrUpdateUser } from '../../utils/features/user'
 import { setEditFormState, sendNameData } from '../../utils/features/editNameForm'
 import AccountSection from '../../components/AccountSection'
 import EditNameInput from '../../components/EditNameInput'
+import EditFormButton from '../../components/EditFormButton'
 import '../../styles/Profile.css'
 
 function Profile ({ accountData }) {
@@ -46,33 +47,28 @@ function Profile ({ accountData }) {
                         <EditNameInput id={'lastname'} />
                     </div>
                     <div className='form-buttons'>
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault()
-                                //console.log('AVANT sendNameData ', editNameForm.editNameData)
-                                sendNameData(store, token)
-                            }}
+                        <EditFormButton
+                            type="sendEditedData"
                             className="form-button"
-                        >
-                            Save
-                        </button>
-                        <button
-                            onClick={() => {dispatch(setEditFormState())}}
+                            children="Save"
+                            store={store}
+                            token={token}
+                        />
+                        <EditFormButton
+                            type="cancelEdit"
                             className="form-button"
-                        >
-                            Cancel
-                        </button>
+                            children="Cancel"
+                        />
                     </div>
                 </form>
             </div>
             : <div className="header">
                 <h1>Welcome back<br />{user.data.firstName + " " + user.data.lastName}!</h1>
-                <button
-                    onClick={() => {dispatch(setEditFormState())}}
+                <EditFormButton
+                    type="openForm"
                     className="edit-button"
-                >
-                    Edit Name
-                </button>
+                    children="Edit Name "
+                />
             </div>
             }
             <h2 className="sr-only">Accounts</h2>
@@ -89,3 +85,30 @@ function Profile ({ accountData }) {
 }
 
 export default Profile
+
+/*
+<button
+    onClick={() => {dispatch(setEditFormState())}}
+    className="edit-button"
+>
+    Edit Name
+</button>
+
+<button
+    onClick={() => {dispatch(setEditFormState())}}
+    className="form-button"
+>
+    Cancel
+</button>
+
+<button
+    onClick={(e) => {
+        e.preventDefault()
+        //console.log('AVANT sendNameData ', editNameForm.editNameData)
+        sendNameData(store, token)
+    }}
+    className="form-button"
+>
+    Save
+</button>
+*/
