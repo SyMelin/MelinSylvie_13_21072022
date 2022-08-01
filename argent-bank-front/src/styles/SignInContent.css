@@ -5,6 +5,8 @@
     font-size: 1.1rem;
     font-weight: bold;
     margin-top: 1rem;
+    border-style: none;
+    border-radius: 0.25em;
     border-color: #00bc77;
     background-color: #00bc77;
     color: #fff;
