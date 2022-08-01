@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectSignInForm } from '../../utils/selectors'
 import { setInputValue } from '../../utils/features/signInForm'
 
-function SignInInput ({ type, id }) {
+function SignInFormInput ({ type, id }) {
 
     const dispatch = useDispatch()
     const signInForm = useSelector(selectSignInForm);
@@ -30,4 +30,4 @@ function SignInInput ({ type, id }) {
     )
 }
 
-export default SignInInput
+export default SignInFormInput
