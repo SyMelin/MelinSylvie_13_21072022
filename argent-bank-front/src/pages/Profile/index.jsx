@@ -5,14 +5,14 @@ import { fetchOrUpdateUser } from '../../utils/features/user'
 import AccountSection from '../../components/AccountSection'
 //import EditNameForm from '../../components/editNameForm'
 import EditNameInput from '../../components/EditNameInput'
-import EditFormButton from '../../components/EditFormButton'
+import EditNameFormButton from '../../components/EditNameFormButton'
 import '../../styles/Profile.css'
 
 function Profile ({ accountData }) {
     
     const dispatch = useDispatch();
     const editNameForm = useSelector(selectEditNameForm);
-    const editFormIsOpen = editNameForm.editFormIsOpen
+    const editNameFormIsOpen = editNameForm.editNameFormIsOpen
     const user = useSelector(selectUser);
     const login = useSelector(selectLogin);
     const token =  login.token
@@ -38,7 +38,7 @@ function Profile ({ accountData }) {
 
     return  user.status === 'resolved' ? (
         <main className="main bg-dark">
-            {editFormIsOpen
+            {editNameFormIsOpen
             ? <div className="header">
                 <h1>Welcome back</h1>
                 <form>
@@ -47,14 +47,14 @@ function Profile ({ accountData }) {
                         <EditNameInput id={'lastname'} />
                     </div>
                     <div className='form-buttons'>
-                        <EditFormButton
+                        <EditNameFormButton
                             type="sendEditedData"
                             className="form-button"
                             children="Save"
                             store={store}
                             token={token}
                         />
-                        <EditFormButton
+                        <EditNameFormButton
                             type="cancelEdit"
                             className="form-button"
                             children="Cancel"
@@ -68,7 +68,7 @@ function Profile ({ accountData }) {
                     <br />
                     {user.data.firstName + " " + user.data.lastName}!
                 </h1>
-                <EditFormButton
+                <EditNameFormButton
                     type="openForm"
                     className="edit-button"
                     children="Edit Name "
@@ -92,14 +92,14 @@ export default Profile
 
 /*
 <button
-    onClick={() => {dispatch(setEditFormState())}}
+    onClick={() => {dispatch(setEditNameFormState())}}
     className="edit-button"
 >
     Edit Name
 </button>
 
 <button
-    onClick={() => {dispatch(setEditFormState())}}
+    onClick={() => {dispatch(setEditNameFormState())}}
     className="form-button"
 >
     Cancel

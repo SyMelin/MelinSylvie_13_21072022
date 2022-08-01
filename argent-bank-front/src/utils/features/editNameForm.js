@@ -8,11 +8,11 @@ const initialState = {
         firstName: '',
         lastName: '',
     },
-    editFormIsOpen: false,
+    editNameFormIsOpen: false,
 }
 
 export const nameEditingSignOut = createAction('nameEditing/signOut')
-export const setEditFormState = createAction('nameEditing/isOpen')
+export const setEditNameFormState = createAction('nameEditing/isOpen')
 export const setInputValue = createAction('nameEditing/setInputValue', (formEntry, value) => {
     return {
         payload: {
@@ -34,14 +34,14 @@ export function sendNameData(store, token) {
        // console.log('dans if de sendNameData', editNameForm.editNameData)
         store.dispatch(fetchOrUpdateUserNameData(token, editNameForm.editNameData))
     }
-    store.dispatch(setEditFormState()) 
+    store.dispatch(setEditNameFormState()) 
 }
 
 export default createReducer(initialState, builder => builder
-    .addCase(setEditFormState, (draft) => {
+    .addCase(setEditNameFormState, (draft) => {
         draft.editNameData.firstName = null
         draft.editNameData.lastName = null
-        draft.editFormIsOpen = !draft.editFormIsOpen
+        draft.editNameFormIsOpen = !draft.editNameFormIsOpen
         return
     })
     .addCase(setInputValue, (draft, action) => {
@@ -52,7 +52,7 @@ export default createReducer(initialState, builder => builder
     .addCase(nameEditingSignOut, (draft) => {
         draft.editNameData.firstName = null
         draft.editNameData.lastName = null
-        draft.editFormIsOpen = false
+        draft.editNameFormIsOpen = false
         return
     })
 )

@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux'
-import { setEditFormState, sendNameData } from '../../utils/features/editNameForm'
-import '../../styles/EditFormButton.css'
+import { setEditNameFormState, sendNameData } from '../../utils/features/editNameForm'
+import '../../styles/EditNameFormButton.css'
 
-function EditFormButton({ type, className, children, store, token }) {
+function EditNameFormButton({ type, className, children, store, token }) {
 
     const dispatch = useDispatch()
 
@@ -15,7 +15,7 @@ function EditFormButton({ type, className, children, store, token }) {
                     sendNameData(store, token)
                 }
                 else {
-                    dispatch(setEditFormState())
+                    dispatch(setEditNameFormState())
                 }
             }}
             className={className}
@@ -25,4 +25,4 @@ function EditFormButton({ type, className, children, store, token }) {
     )
 }
 
-export default EditFormButton
+export default EditNameFormButton

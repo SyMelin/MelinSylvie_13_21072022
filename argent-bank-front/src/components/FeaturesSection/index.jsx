@@ -1,4 +1,4 @@
-import FeatureItem from '../FeatureItem'
+import FeaturesItem from '../FeaturesItem'
 import '../../styles/Features.css'
 
 function FeaturesSection ({ featureItems }) {
@@ -6,7 +6,7 @@ function FeaturesSection ({ featureItems }) {
         <section className="features">
             <h2 className="sr-only">Features</h2>
             {featureItems.map((item, index) => (
-                <FeatureItem
+                <FeaturesItem
                     key={`featureItem--${index}`}
                     featureItem={item}
                 />

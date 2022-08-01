@@ -1,4 +1,4 @@
-import '../../styles/FeatureItem.css'
+import '../../styles/FeaturesItem.css'
 
 function FeatureItem ({ featureItem }) {
     return (

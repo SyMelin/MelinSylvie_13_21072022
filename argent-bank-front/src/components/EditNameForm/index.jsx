@@ -2,7 +2,7 @@
 
 /*
 import EditNameInput from '../../components/EditNameInput'
-import EditFormButton from '../../components/EditFormButton'
+import EditNameFormButton from '../../components/EditNameFormButton'
 
 function EditNameForm({ store, token }) {
     return (
@@ -12,14 +12,14 @@ function EditNameForm({ store, token }) {
                 <EditNameInput id={'lastname'} />
             </div>
             <div className='form-buttons'>
-                <EditFormButton
+                <EditNameFormButton
                     type="sendEditedData"
                     className="form-button"
                     children="Save"
                     store={store}
                     token={token}
                 />
-                <EditFormButton
+                <EditNameFormButton
                     type="cancelEdit"
                     className="form-button"
                     children="Cancel"
