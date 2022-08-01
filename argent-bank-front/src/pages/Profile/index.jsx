@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import { selectUser, selectLogin, selectEditNameForm  } from '../../utils/selectors'
 import { fetchOrUpdateUser } from '../../utils/features/user'
-import { setEditFormState, sendNameData } from '../../utils/features/editNameForm'
 import AccountSection from '../../components/AccountSection'
+//import EditNameForm from '../../components/editNameForm'
 import EditNameInput from '../../components/EditNameInput'
 import EditFormButton from '../../components/EditFormButton'
 import '../../styles/Profile.css'
@@ -63,7 +63,11 @@ function Profile ({ accountData }) {
                 </form>
             </div>
             : <div className="header">
-                <h1>Welcome back<br />{user.data.firstName + " " + user.data.lastName}!</h1>
+                <h1>
+                    Welcome back
+                    <br />
+                    {user.data.firstName + " " + user.data.lastName}!
+                </h1>
                 <EditFormButton
                     type="openForm"
                     className="edit-button"
