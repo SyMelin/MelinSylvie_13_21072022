@@ -4,7 +4,7 @@ import { selectUser, selectEditNameForm, selectLogin } from '../selectors'
 import { fetchOrUpdateUserNameData } from './user'
 
 const initialState = {
-        formData: {
+    formData: {
         firstName: '',
         lastName: '',
     },
