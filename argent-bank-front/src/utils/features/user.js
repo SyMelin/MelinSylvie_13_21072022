@@ -80,9 +80,11 @@ export function fetchOrUpdateUserNameData(token, formData) {
                 dispatch(userResolved(resJson.body))
             } else {
                 dispatch(userRejected(resJson.message))
+                alert("Error: Your name couldn't be updated")
             }
         } catch (error) {
             dispatch(userRejected(error))
+            alert("Error: Your name couldn't be updated")
         }
     }    
 }
