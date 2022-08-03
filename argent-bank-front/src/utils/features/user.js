@@ -20,7 +20,7 @@ export function fetchOrUpdateUser(token) {
         const status = selectUser(getState()).status
         // if request is pending or updating, stop the action to avoid double request
         if (status === 'pending' || status === 'updating') {
-            return;
+            return
         }
         // else, launch the request
         dispatch(userFetching());
@@ -36,7 +36,7 @@ export function fetchOrUpdateUser(token) {
                         'Authorization': `Bearer ${token}`
                     }
                 }
-            );
+            )
             const resJson = await response.json();
             console.log("resJson", await resJson)
             if (resJson.status === 200) {

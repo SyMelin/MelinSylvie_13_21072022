@@ -5,7 +5,7 @@ import { setInputValue } from '../../utils/features/signInForm'
 function SignInFormInput ({ type, id, formEntry }) {
 
     const dispatch = useDispatch()
-   // const signInFormInput = useSelector(selectSignInForm).formEntry;
+    const signInFormInput = useSelector(selectSignInForm).formEntry;
 
     return (
         <div className="input-wrapper">
@@ -13,7 +13,7 @@ function SignInFormInput ({ type, id, formEntry }) {
             <input
                 type={type}
                 id={id}
-                //defaultValue={signInFormInput}
+                defaultValue={signInFormInput} //To be considered when the "remember me" feature will be implemented
                 onChange={(e) => {dispatch(setInputValue(formEntry, e.target.value))}}
             />
         </div>

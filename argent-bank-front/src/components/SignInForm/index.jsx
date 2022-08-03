@@ -1,8 +1,14 @@
+import { useDispatch, useSelector } from 'react-redux'
+import { selectLogin, selectSignInForm } from '../../utils/selectors'
 import SignInFormInput from '../SignInFormInput'
 import SignInFormButton from '../SignInFormButton'
 import '../../styles/SignInForm.css'
 
 function SignInForm() {
+
+    const signInFormError = useSelector(selectSignInForm).error
+    const login = useSelector(selectLogin)
+
     return (
         <form>
             <SignInFormInput
@@ -14,7 +20,11 @@ function SignInForm() {
                 type={'password'}
                 id={'password'}
                 formEntry={'password'}
-                />
+            />
+            { signInFormError
+            ? <span className='signInForm-error'>{login.error}</span>
+            : null
+            }
             <div className="input-remember">
                 <input
                     type="checkbox"

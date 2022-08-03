@@ -25,7 +25,7 @@ function Profile ({ accountData }) {
     }, [dispatch, token])
 
     if (user.status === 'rejected') {
-        return
+        return <span>Something went wrong</span>
     }
 
     const isLoading = user.status === 'void' || user.status === 'pending'

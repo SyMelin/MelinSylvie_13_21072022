@@ -1,6 +1,7 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
 //import produce from 'immer'
 import { selectLogin, selectSignInForm } from '../selectors'
+import { signInFormSetError } from './signInForm'
 
 
 const initialState = {
@@ -21,18 +22,13 @@ export function sendSignInFormData(e, navigate) {
     e.preventDefault()
     return async (dispatch, getState) => {
         const signInFormData = selectSignInForm(getState()).formData
-        dispatch(fetchOrUpdateLogin(signInFormData));
-        const status = selectLogin(getState()).status
-        if (status === 'rejected') {
-            return <span>Something went wrong</span>
-        }
-        return navigate("/profile", {replace:true})
+        dispatch(fetchOrUpdateLogin(signInFormData, navigate))
     }
 }
 
 
 //thunk creator
-export function fetchOrUpdateLogin(signInFormData) {
+export function fetchOrUpdateLogin(signInFormData, navigate) {
     //return a thunk
     return async (dispatch, getState) => {
         const status = selectLogin(getState()).status
@@ -60,11 +56,15 @@ export function fetchOrUpdateLogin(signInFormData) {
             if (resJson.status === 200) {
                 dispatch(loginResolved(resJson.body.token))
                 dispatch(connectUser())
+                dispatch(signInFormSetError(false))
+                return navigate("/profile", {replace:true})
             } else {
                 dispatch(loginRejected(resJson.message))
+                dispatch(signInFormSetError(true))
             }
         } catch (error) {
             dispatch(loginRejected(error))
+            dispatch(signInFormSetError(true))
         }
     }
 }
