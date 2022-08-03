@@ -20,7 +20,7 @@ export const loginSignOut = createAction('login/signOut')
 export function sendSignInFormData(e, navigate) {
     e.preventDefault()
     return async (dispatch, getState) => {
-        const signInFormData = selectSignInForm(getState())
+        const signInFormData = selectSignInForm(getState()).formData
         dispatch(fetchOrUpdateLogin(signInFormData));
         const status = selectLogin(getState()).status
         if (status === 'rejected') {

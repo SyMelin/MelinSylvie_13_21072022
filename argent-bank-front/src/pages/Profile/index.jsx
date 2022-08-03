@@ -34,7 +34,7 @@ function Profile ({ accountData }) {
         return <span>Loading</span>
     }
 
-    return  user.status === 'resolved' ? (
+    return user.status === 'resolved' ? (
         <main className="main bg-dark">
             {editNameFormIsOpen
             ? <div className="header">

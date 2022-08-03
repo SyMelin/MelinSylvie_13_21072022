@@ -11,7 +11,6 @@ const initialState = {
 const userFetching = createAction('user/fetching')
 const userResolved = createAction('user/resolved')
 const userRejected = createAction('user/rejected')
-export const userChangingName = createAction('user/userChangingName')
 export const userSignOut = createAction('user/signOut')
 
 //thunk creator
@@ -121,11 +120,6 @@ export default createReducer(initialState, builder => builder
             return
         }
         return;
-    })
-    .addCase(userChangingName, (draft, action) => {
-        draft.data = action.payload
-        draft.status = 'resolved'
-        return
     })
     .addCase(userSignOut, (draft) => {
         draft.status = 'void'
