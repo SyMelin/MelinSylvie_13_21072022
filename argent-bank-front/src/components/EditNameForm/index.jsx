@@ -6,8 +6,14 @@ function EditNameForm() {
     return (
         <form>
             <div className='form-inputs'>
-                <EditNameInput id={'firstname'} />
-                <EditNameInput id={'lastname'} />
+                <EditNameInput
+                    id={'firstname'}
+                    formEntry={'firstName'}
+                />
+                <EditNameInput
+                    id={'lastname'}
+                    formEntry={'lastName'}
+                />
             </div>
             <div className='form-buttons'>
                 <EditNameFormButton

@@ -5,8 +5,16 @@ import '../../styles/SignInForm.css'
 function SignInForm() {
     return (
         <form>
-            <SignInFormInput type={'text'} id={'username'} />
-            <SignInFormInput type={'password'} id={'password'} />
+            <SignInFormInput
+                type={'text'}
+                id={'username'}
+                formEntry={'email'}
+            />
+            <SignInFormInput
+                type={'password'}
+                id={'password'}
+                formEntry={'password'}
+                />
             <div className="input-remember">
                 <input
                     type="checkbox"

@@ -2,11 +2,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectSignInForm } from '../../utils/selectors'
 import { setInputValue } from '../../utils/features/signInForm'
 
-function SignInFormInput ({ type, id }) {
+function SignInFormInput ({ type, id, formEntry }) {
 
     const dispatch = useDispatch()
-    const signInForm = useSelector(selectSignInForm);
-    const signInFormInput = signInForm[id]
+   // const signInFormInput = useSelector(selectSignInForm).formEntry;
 
     return (
         <div className="input-wrapper">
@@ -14,17 +13,8 @@ function SignInFormInput ({ type, id }) {
             <input
                 type={type}
                 id={id}
-                defaultValue={signInFormInput}
-                onChange={(e) => {
-                    let formEntry = ""
-                    if (id === "username") {
-                        formEntry = "email"
-                    }
-                    if (id === "password") {
-                        formEntry = "password"
-                    }
-                    dispatch(setInputValue(formEntry, e.target.value))
-                }}
+                //defaultValue={signInFormInput}
+                onChange={(e) => {dispatch(setInputValue(formEntry, e.target.value))}}
             />
         </div>
     )

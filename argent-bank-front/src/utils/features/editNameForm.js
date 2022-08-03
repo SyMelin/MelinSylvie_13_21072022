@@ -8,6 +8,10 @@ const initialState = {
         firstName: '',
         lastName: '',
     },
+    error: {
+        firstName: false,
+        lastName: false,
+    },
     editNameFormIsOpen: false,
 }
 
@@ -50,12 +54,21 @@ export default createReducer(initialState, builder => builder
     })
     .addCase(setInputValue, (draft, action) => {
         const formEntry = action.payload.formEntry
-        draft.formData[formEntry] = action.payload.value
+        // the value has at least 2 characters and the first character should be uppercase
+        if (!(/^\b([A-ZÀ-Ÿ][-,a-zà-ÿ. ']+[ ]*)+$/gm.test(action.payload.value))) {
+            draft.formData[formEntry] = ""
+            draft.error[formEntry] = true
+        } else {
+            draft.formData[formEntry] = action.payload.value
+            draft.error[formEntry] = false
+        }
         return
     })
     .addCase(nameEditingSignOut, (draft) => {
         draft.formData.firstName = null
         draft.formData.lastName = null
+        draft.error.firstName = null
+        draft.error.lastName = null
         draft.editNameFormIsOpen = false
         return
     })

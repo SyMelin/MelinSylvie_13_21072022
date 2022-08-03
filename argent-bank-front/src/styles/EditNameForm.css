@@ -1,12 +1,11 @@
-
 form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
   
-  .form-inputs, .form-buttons {
-    display: flex;
-    justify-content: center;
-    column-gap: 1em;
-  }
+.form-inputs, .form-buttons {
+  display: flex;
+  justify-content: center;
+  column-gap: 1em;
+}
