@@ -6,12 +6,14 @@ const initialState = {
         email: '',
         password: '',
     },
+    checkbox: false,
     error: false,
 }
 
 export const signInFormSetError = createAction('signInForm/setError')
 export const signInFormSignOut = createAction('signInForm/signOut')
-export const setInputValue = createAction('signInForm/setInputValue', (formEntry, value) => {
+export const setCheckboxInputValue = createAction('signInForm/setCheckboxInputValue')
+export const setTextInputValue = createAction('signInForm/setTextInputValue', (formEntry, value) => {
    return {
         payload: {
             formEntry: formEntry,
@@ -21,17 +23,22 @@ export const setInputValue = createAction('signInForm/setInputValue', (formEntry
 })
 
 export default createReducer(initialState, builder => builder
-    .addCase(setInputValue, (draft, action) => {
+    .addCase(setTextInputValue, (draft, action) => {
         const formEntry = action.payload.formEntry;
         draft.formData[formEntry] = action.payload.value
         return
+    })
+    .addCase(setCheckboxInputValue, (draft) => {
+        draft.checkbox = !draft.checkbox
     })
     .addCase(signInFormSetError, (draft, action) => {
         draft.error = action.payload
     })
     .addCase(signInFormSignOut, (draft) => {
-        draft.formData.email = ''
-        draft.formData.password = ''
+        if (draft.checkbox === false) {
+            draft.formData.email = ''
+            draft.formData.password = ''
+        }
         return
     })
 )

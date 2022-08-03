@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectUser, selectEditNameForm } from '../../utils/selectors'
-import { setInputValue } from '../../utils/features/editNameForm'
+import { setTextInputValue } from '../../utils/features/editNameForm'
 import '../../styles/EditNameFormTextInput.css'
 
 function EditNameFormTextInput ({ id, formEntry }) {
@@ -13,8 +13,8 @@ function EditNameFormTextInput ({ id, formEntry }) {
     const firstLetterToUppercase = (string) => (`${string[0].toUpperCase()}${string.slice(1)}`)
 
     useEffect (() => {
-        dispatch(setInputValue('firstName', userData.firstName))
-        dispatch(setInputValue('lastName', userData.lastName))
+        dispatch(setTextInputValue('firstName', userData.firstName))
+        dispatch(setTextInputValue('lastName', userData.lastName))
     }, [dispatch, userData])
 
     return (
@@ -25,7 +25,7 @@ function EditNameFormTextInput ({ id, formEntry }) {
                 id={`user${firstLetterToUppercase(id)}`}
                 placeholder={`${firstLetterToUppercase(id)}`}
                 defaultValue={userData[formEntry]}
-                onChange={(e) => {dispatch(setInputValue(formEntry, e.target.value))}}
+                onChange={(e) => {dispatch(setTextInputValue(formEntry, e.target.value))}}
             />
             { editNameFormError[formEntry]
             ? <span className="form-inputError">The name should begins with an upper-case letter<br /> Ex: Robert Downey Jr.</span>

@@ -17,7 +17,7 @@ const initialState = {
 
 export const nameEditingSignOut = createAction('nameEditing/signOut')
 export const setEditNameFormState = createAction('nameEditing/isOpen')
-export const setInputValue = createAction('nameEditing/setInputValue', (formEntry, value) => {
+export const setTextInputValue = createAction('nameEditing/setTextInputValue', (formEntry, value) => {
     return {
         payload: {
             formEntry: formEntry,
@@ -52,7 +52,7 @@ export default createReducer(initialState, builder => builder
         draft.editNameFormIsOpen = !draft.editNameFormIsOpen
         return
     })
-    .addCase(setInputValue, (draft, action) => {
+    .addCase(setTextInputValue, (draft, action) => {
         const formEntry = action.payload.formEntry
         // the value has at least 2 characters and the first character should be uppercase
         if (!(/^\b([A-ZÀ-Ÿ][-,a-zà-ÿ. ']+[ ]*)+$/gm.test(action.payload.value))) {
