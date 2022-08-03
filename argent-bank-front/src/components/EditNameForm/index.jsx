@@ -1,4 +1,4 @@
-import EditNameInput from '../../components/EditNameInput'
+import EditNameFormTextInput from '../../components/EditNameFormTextInput'
 import EditNameFormButton from '../../components/EditNameFormButton'
 import '../../styles/EditNameForm.css'
 
@@ -6,11 +6,11 @@ function EditNameForm() {
     return (
         <form>
             <div className='form-inputs'>
-                <EditNameInput
+                <EditNameFormTextInput
                     id={'firstname'}
                     formEntry={'firstName'}
                 />
-                <EditNameInput
+                <EditNameFormTextInput
                     id={'lastname'}
                     formEntry={'lastName'}
                 />

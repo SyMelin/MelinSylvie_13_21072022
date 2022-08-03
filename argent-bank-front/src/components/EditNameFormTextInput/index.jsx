@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectUser, selectEditNameForm } from '../../utils/selectors'
 import { setInputValue } from '../../utils/features/editNameForm'
-import '../../styles/EditNameInput.css'
+import '../../styles/EditNameFormTextInput.css'
 
-function EditNameInput ({ id, formEntry }) {
+function EditNameFormTextInput ({ id, formEntry }) {
 
     const dispatch = useDispatch()
     const userData = useSelector(selectUser).data
@@ -35,4 +35,4 @@ function EditNameInput ({ id, formEntry }) {
     )
 }
 
-export default EditNameInput
+export default EditNameFormTextInput
