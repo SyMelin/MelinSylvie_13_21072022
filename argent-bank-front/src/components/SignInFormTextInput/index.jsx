@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectSignInForm } from '../../utils/selectors'
 import { setInputValue } from '../../utils/features/signInForm'
 
-function SignInFormInput ({ type, id, formEntry }) {
+function SignInFormTextInput ({ type, id, formEntry }) {
 
     const dispatch = useDispatch()
-    const signInFormInput = useSelector(selectSignInForm).formEntry;
+    const signInFormTextInput = useSelector(selectSignInForm).formEntry;
 
     return (
         <div className="input-wrapper">
@@ -13,11 +13,11 @@ function SignInFormInput ({ type, id, formEntry }) {
             <input
                 type={type}
                 id={id}
-                defaultValue={signInFormInput} //To be considered when the "remember me" feature will be implemented
+                defaultValue={signInFormTextInput} //To be considered when the "remember me" feature will be implemented
                 onChange={(e) => {dispatch(setInputValue(formEntry, e.target.value))}}
             />
         </div>
     )
 }
 
-export default SignInFormInput
+export default SignInFormTextInput

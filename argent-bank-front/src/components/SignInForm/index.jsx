@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { selectLogin, selectSignInForm } from '../../utils/selectors'
-import SignInFormInput from '../SignInFormInput'
+import SignInFormTextInput from '../SignInFormTextInput'
 import SignInFormButton from '../SignInFormButton'
 import '../../styles/SignInForm.css'
 
@@ -11,12 +11,12 @@ function SignInForm() {
 
     return (
         <form>
-            <SignInFormInput
+            <SignInFormTextInput
                 type={'text'}
                 id={'username'}
                 formEntry={'email'}
             />
-            <SignInFormInput
+            <SignInFormTextInput
                 type={'password'}
                 id={'password'}
                 formEntry={'password'}
