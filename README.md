@@ -1,4 +1,4 @@
-# Project 12 - Sportsee
+# Project 13 - Argent Bank
 
 This project for the Argent Bank app, designed to be a frontend project, is connected to a micro API backend service that must be launched locally.
 The repository contains all the source code for both frontend and backend parts.
@@ -64,21 +64,23 @@ Your server should now be running at http://locahost:3001 and you will now have 
 
 Once you run the `populate-db` script, you should have two users in your database:
 
-##### 3.4.4.4.1 Tony Stark
+```bash
+# Tony Stark
 
 - First Name: `Tony`
 - Last Name: `Stark`
 - Email: `tony@stark.com`
 - Password: `password123`
 
-##### 3.4.4.4.2 Steve Rogers
+# Steve Rogers
 
 - First Name: `Steve`,
 - Last Name: `Rogers`,
 - Email: `steve@rogers.com`,
 - Password: `password456`
+```
 
-#### API Documentation
+#### 3.4.5 API Documentation
 
 To learn more about how the API works, once you have started your local environment, you can visit: http://localhost:3001/api-docs
 
