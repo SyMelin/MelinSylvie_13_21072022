@@ -1,5 +1,4 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
-//import produce from 'immer'
 import { selectUser } from '../selectors'
 
 const initialState = {
@@ -8,14 +7,21 @@ const initialState = {
     error: null,
 }
 
+
+// Action creators
 const userFetching = createAction('user/fetching')
 const userResolved = createAction('user/resolved')
 const userRejected = createAction('user/rejected')
 export const userSignOut = createAction('user/signOut')
 
-//thunk creator
+
+/**
+ * Return a Thunk function that:
+ * Launchs a Post fetch request to get the user's data from the API
+ * 
+ * @param { String } token
+ */
 export function fetchOrUpdateUser(token) {
-    //return a thunk
     return async (dispatch, getState) => {
         const status = selectUser(getState()).status
         // if request is pending or updating, stop the action to avoid double request
@@ -23,21 +29,19 @@ export function fetchOrUpdateUser(token) {
             return
         }
         // else, launch the request
-        dispatch(userFetching());
+        dispatch(userFetching())
         try {
             const response = await fetch(
                 'http://localhost:3001/api/v1/user/profile',
                 {
-                    // Adding method type
                     method: 'POST',
-                    // Adding headers
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     }
                 }
             )
-            const resJson = await response.json();
+            const resJson = await response.json()
             console.log("resJson", await resJson)
             if (resJson.status === 200) {
                 dispatch(userResolved(resJson.body))
@@ -50,31 +54,37 @@ export function fetchOrUpdateUser(token) {
     }   
 }
 
+
+/**
+ * Returns a Thunk function that:
+ * Launchs a PUT fetch to modify the user's firstname and/or lastname
+ * 
+ * @param { String } token
+ * @param { Object } formData
+ */
 export function fetchOrUpdateUserNameData(token, formData) {
-    //console.log('dans fetch', formData )
+
     return async (dispatch, getState) => {
         const status = selectUser(getState()).status
         // if request is pending or updating, stop the action to avoid double request
         if (status === 'pending' || status === 'updating') {
-            return;
+            return
         }
         // else, launch the request
-        dispatch(userFetching());
+        dispatch(userFetching())
         try {
             const response = await fetch(
                 'http://localhost:3001/api/v1/user/profile',
                 {
-                    // Adding method type
                     method: 'PUT',
-                    // Adding headers
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify(formData)
                 }
-            );
-            const resJson = await response.json();
+            )
+            const resJson = await response.json()
             console.log("resJson", await resJson)
             if (resJson.status === 200) {
                 dispatch(userResolved(resJson.body))
@@ -89,6 +99,8 @@ export function fetchOrUpdateUserNameData(token, formData) {
     }    
 }
 
+
+// Reducer creator
 export default createReducer(initialState, builder => builder
     .addCase(userFetching, (draft) => {
         if (draft.status === 'void') {
@@ -104,7 +116,7 @@ export default createReducer(initialState, builder => builder
             draft.status = 'updating'
             return
         }
-        return;
+        return
     })
     .addCase(userResolved, (draft, action) => {
         if(draft.status === 'pending' || draft.status === 'updating') {
@@ -112,7 +124,7 @@ export default createReducer(initialState, builder => builder
             draft.status = 'resolved'
             return
         }
-        return;
+        return
     })
     .addCase(userRejected, (draft, action) => {
         if (draft.status === 'pending' || draft.status === 'updating') {
@@ -121,7 +133,7 @@ export default createReducer(initialState, builder => builder
             draft.status = 'rejected'
             return
         }
-        return;
+        return
     })
     .addCase(userSignOut, (draft) => {
         draft.status = 'void'

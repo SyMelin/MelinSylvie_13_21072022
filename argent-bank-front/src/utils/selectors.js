@@ -1,4 +1,4 @@
-//selectors used with useSelector hook
+//selectors used with useSelector hook to access the store properties
 
 export const selectSignInForm = (state) => state.signInForm
 

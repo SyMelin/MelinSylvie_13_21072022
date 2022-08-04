@@ -5,6 +5,13 @@ import SignInFormCheckboxInput from '../SignInFormChexboxInput'
 import SignInFormButton from '../SignInFormButton'
 import './SignInForm.css'
 
+
+/**
+ * React component: SignInForm
+ * 
+ * @type { React.FC }
+ * @returns { React.ReactElement }
+ */
 function SignInForm() {
 
     const signInFormError = useSelector(selectSignInForm).error

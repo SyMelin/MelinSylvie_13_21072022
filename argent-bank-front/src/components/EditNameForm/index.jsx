@@ -2,6 +2,13 @@ import EditNameFormTextInput from '../../components/EditNameFormTextInput'
 import EditNameFormButton from '../../components/EditNameFormButton'
 import './EditNameForm.css'
 
+
+/**
+ * React component: EditNameForm
+ * 
+ * @type { React.FC }
+ * @returns { React.ReactElement }
+ */
 function EditNameForm() {
     return (
         <form>

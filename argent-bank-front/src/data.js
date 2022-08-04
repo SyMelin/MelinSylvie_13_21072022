@@ -1,3 +1,7 @@
+/** @constant
+    @type { Array.<Object> }
+*/
+//To be removed when API for the accounts' data is implemented
 export const accountData = [
     {
         title: "Argent Bank Checking",

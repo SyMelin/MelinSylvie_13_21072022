@@ -1,6 +1,19 @@
 import FeaturesItem from '../FeaturesItem'
 import './Features.css'
 
+
+/**
+ * FeaturesSection properties
+ * 
+ * @typedef { Object } FeaturesSectionProps
+ * @prop { Array.<Object> } featureItems
+ */
+/**
+ * React component: FeaturesSection
+ * 
+ * @type { React.FC<FeaturesSectionProps> }
+ * @returns { React.ReactElement }
+ */
 function FeaturesSection ({ featureItems }) {
     return (
         <section className="features">

@@ -1,8 +1,6 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
-//import produce from 'immer'
 import { selectLogin, selectSignInForm } from '../selectors'
 import { signInFormSetError } from './signInForm'
-
 
 const initialState = {
     status: 'void',
@@ -11,6 +9,8 @@ const initialState = {
     error: null,
 }
 
+
+// Action creators
 const loginFetching = createAction('login/fetching')
 const loginResolved = createAction('login/resolved')
 const loginRejected = createAction('login/rejected')
@@ -18,6 +18,14 @@ const connectUser = createAction('login/connectUser')
 export const loginSignOut = createAction('login/signOut')
 
 
+/**
+ * First, prevents the default behaviour of the form button
+ * Then return a thunk function that:
+ *  calls the fetchOrUpdateLogin function
+ * 
+ * @param {*} e - event
+ * @param { function } navigate - const navigte = useNavigate()
+ */
 export function sendSignInFormData(e, navigate) {
     e.preventDefault()
     return async (dispatch, getState) => {
@@ -27,31 +35,34 @@ export function sendSignInFormData(e, navigate) {
 }
 
 
-//thunk creator
+/**
+ * Return a Thunk function that:
+ * First, launchs a Post fetch request to get a token from the API
+ * If the request is resolved, then it returns the Profile page
+ * If the request is rejected, then an error message will be displayed on the current page (Login page)
+ * 
+ * @param { Object } signInFormData
+ * @param { function } navigate - const navigate = useNavigate()
+ */
 export function fetchOrUpdateLogin(signInFormData, navigate) {
-    //return a thunk
     return async (dispatch, getState) => {
         const status = selectLogin(getState()).status
         // if request is pending or updating, stop the action to avoid double request
         if (status === 'pending' || status === 'updating') {
-            return;
+            return
         }
         // else, launch the request
-        dispatch(loginFetching());
+        dispatch(loginFetching())
         try {
             const response = await fetch(
                 'http://localhost:3001/api/v1/user/login',
                 {
-                    // Adding method type
                     method: 'POST',
-                    // Adding headers
                     headers: { 'Content-Type': 'application/json' },
-                    // Adding body or contents to send
                     body: JSON.stringify(signInFormData)
                 }
-            );
-            //console.log('response', response)
-            const resJson = await response.json();
+            )
+            const resJson = await response.json()
             console.log("resJson", await resJson)
             if (resJson.status === 200) {
                 dispatch(loginResolved(resJson.body.token))
@@ -70,6 +81,7 @@ export function fetchOrUpdateLogin(signInFormData, navigate) {
 }
 
 
+// Reducer creator
 export default createReducer(initialState, builder => builder
     .addCase(loginFetching, (draft) => {
         if (draft.status === 'void') {
@@ -85,7 +97,7 @@ export default createReducer(initialState, builder => builder
             draft.status = 'updating'
             return
         }
-        return;
+        return
     })
     .addCase(loginResolved, (draft, action) => {
         if(draft.status === 'pending' || draft.status === 'updating') {
@@ -93,7 +105,7 @@ export default createReducer(initialState, builder => builder
             draft.status = 'resolved'
             return
         }
-        return;
+        return
     })
     .addCase(loginRejected, (draft, action) => {
         if (draft.status === 'pending' || draft.status === 'updating') {
@@ -102,7 +114,7 @@ export default createReducer(initialState, builder => builder
             draft.status = 'rejected'
             return
         }
-        return;
+        return
     })
     .addCase(connectUser, (draft) => {
         draft.userIsConnected = !draft.userIsConnected

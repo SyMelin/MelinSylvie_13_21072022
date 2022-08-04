@@ -2,11 +2,19 @@ import { useEffect } from 'react'
 import SignInForm from '../../components/SignInForm'
 import './Login.css'
 
+
+/**
+ * React component: Login page
+ * 
+ * @type { React.FC }
+ * @returns { React.ReactElement }
+ */
+
 function Login () {
 
     useEffect(() => {
-        document.title = 'Argent Bank - Login Page';
-    });
+        document.title = 'Argent Bank - Login Page'
+    })
 
     return (
         <main className="main bg-dark">

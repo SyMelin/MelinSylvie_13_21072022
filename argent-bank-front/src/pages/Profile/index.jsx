@@ -7,17 +7,30 @@ import EditNameForm from '../../components/EditNameForm'
 import EditNameFormButton from '../../components/EditNameFormButton'
 import './Profile.css'
 
+
+/**
+ * Profile properties
+ * 
+ * @typedef { Object } ProfileProps
+ * @prop { Array.<Object } accountData - mocked data for the accounts. To be removed when API for the accounts' data is implemented
+ */
+/**
+ * React component: Profile page
+ * 
+ * @type { React.FC<ProfileProps> }
+ * @returns { React.ReactElement }
+ */
 function Profile ({ accountData }) {
     
-    const dispatch = useDispatch();
-    const editNameForm = useSelector(selectEditNameForm);
+    const dispatch = useDispatch()
+    const editNameForm = useSelector(selectEditNameForm)
     const editNameFormIsOpen = editNameForm.editNameFormIsOpen
-    const user = useSelector(selectUser);
-    const login = useSelector(selectLogin);
+    const user = useSelector(selectUser)
+    const login = useSelector(selectLogin)
     const token =  login.token
 
     useEffect(() => {
-        document.title = 'Argent Bank - Profile Page';
+        document.title = 'Argent Bank - Profile Page'
     })
 
     useEffect (() => {

@@ -5,6 +5,13 @@ import LinkToProfile from '../LinkToProfile'
 import LogButton from '../LogButton'
 import './Header.css'
 
+
+/**
+ * React component: Header
+ * 
+ * @type { React.FC }
+ * @returns { React.ReactElement }
+ */
 function Header () {
     const user = useSelector(selectUser)
     const isResolved = user.status === 'resolved'
@@ -30,17 +37,3 @@ function Header () {
 }
 
 export default Header
-
-//Quand utilisateur connecté :
-/*
-<div>
-    <a class="main-nav-item" href="./user.html">
-        <i class="fa fa-user-circle"></i>
-        Tony
-    </a>
-    <a class="main-nav-item" href="./index.html">
-        <i class="fa fa-sign-out"></i>
-        Sign Out
-    </a>
- </div>
- */

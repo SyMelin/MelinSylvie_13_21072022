@@ -1,5 +1,4 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
-//import produce from 'immer'
 import { selectUser, selectEditNameForm, selectLogin } from '../selectors'
 import { fetchOrUpdateUserNameData } from './user'
 
@@ -15,6 +14,8 @@ const initialState = {
     editNameFormIsOpen: false,
 }
 
+
+// Action creators
 export const nameEditingSignOut = createAction('nameEditing/signOut')
 export const setEditNameFormState = createAction('nameEditing/isOpen')
 export const setTextInputValue = createAction('nameEditing/setTextInputValue', (formEntry, value) => {
@@ -27,6 +28,17 @@ export const setTextInputValue = createAction('nameEditing/setTextInputValue', (
 })
 
 
+/**
+ * Thunk function
+ * First, prevents the default behaviour of the form button
+ * Then return a thunk function that:
+ * checks if a formData entry is empty and stops the process in this case
+ * Then, checks if a formData entry is different from the matching current user data,
+ * and calls the fetchOrUpdateUserNameData function
+ * Finally, closes the editNameForm
+ * 
+ * @param {*} e - event
+ */
 export function sendNameData (e) {
     e.preventDefault()
     return (dispatch, getState) => {
@@ -45,6 +57,8 @@ export function sendNameData (e) {
     }
 }
 
+
+// Reducer creator
 export default createReducer(initialState, builder => builder
     .addCase(setEditNameFormState, (draft) => {
         draft.formData.firstName = null

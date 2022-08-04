@@ -1,5 +1,12 @@
 import './Footer.css'
 
+
+/**
+ * React component: Footer
+ * 
+ * @type { React.FC }
+ * @returns { React.ReactElement }
+ */
 function Footer () {
     return (
     <footer className="footer">

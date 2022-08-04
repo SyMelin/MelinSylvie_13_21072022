@@ -7,6 +7,19 @@ import { userSignOut } from '../../utils/features/user'
 import { nameEditingSignOut } from '../../utils/features/editNameForm'
 import './LogButton.css'
 
+
+/**
+ * LogButton properties
+ * 
+ * @typedef { Object } LogButtonProps
+ * @prop { Boolean } userIsConnected
+ */
+/**
+ * React component: LogButton
+ * 
+ * @type { React.FC<LogButtonProps> }
+ * @returns { React.ReactElement }
+ */
 function LogButton ({ userIsConnected }) {
 
     const dispatch = useDispatch()

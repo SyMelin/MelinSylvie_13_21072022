@@ -4,6 +4,20 @@ import { selectUser, selectEditNameForm } from '../../utils/selectors'
 import { setTextInputValue } from '../../utils/features/editNameForm'
 import './EditNameFormTextInput.css'
 
+
+/**
+ * EditNameFormTextInput properties
+ * 
+ * @typedef { Object } EditNameFormTextInputProps
+ * @prop { String } id
+ * @prop { String } formEntry
+ */
+/**
+ * React component: EditNameFormTextInput
+ * 
+ * @type { React.FC<EditNameFormTextInputProps> }
+ * @returns { React.ReactElement }
+ */
 function EditNameFormTextInput ({ id, formEntry }) {
 
     const dispatch = useDispatch()

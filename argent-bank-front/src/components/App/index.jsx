@@ -1,12 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Header from '../Header';
-import Home from '../../pages/Home';
-import Profile from '../../pages/Profile';
-import { accountData } from '../../data';
-import Login from '../../pages/Login';
-import Footer from '../Footer';
+import Header from '../Header'
+import Home from '../../pages/Home'
+import Profile from '../../pages/Profile'
+import { accountData } from '../../data'
+import Login from '../../pages/Login'
+import Footer from '../Footer'
 import './App.css'
 
+
+/**
+ * React component: App
+ * 
+ * @type { React.FC }
+ * @returns { React.ReactElement }
+ */
 function App() {
 
   return (
@@ -21,17 +28,7 @@ function App() {
         <Footer />
       </Router>
     </div>
-  );
+  )
 }
 
-export default App;
-
-/*
-
-<Route path="/login" element={<Login />} />
-<Route path="/profile" element={<Profile accountData={accountData} />} />
-*/
-
-/*
-<Profile accountData={accountData} />
-*/
+export default App

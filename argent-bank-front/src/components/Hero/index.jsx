@@ -1,6 +1,14 @@
 import bankTree from '../../assets/bank-tree.jpeg'
 import './Hero.css'
 
+
+/**
+ * React component: Hero
+ * 
+ * @type { React.FC }
+ * @returns { React.ReactElement }
+ */
+
 function Hero () {
     return (
         <div className="hero" style={{backgroundImage: `url(${bankTree})`}}>

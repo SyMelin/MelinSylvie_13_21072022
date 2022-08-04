@@ -3,6 +3,13 @@ import { useDispatch } from 'react-redux'
 import { sendSignInFormData } from '../../utils/features/login'
 import './SignInFormButton.css'
 
+
+/**
+ * React component: SignInFormButton
+ * 
+ * @type { React.FC }
+ * @returns { React.ReactElement }
+ */
 function SignInFormButton() {
 
     const dispatch = useDispatch()

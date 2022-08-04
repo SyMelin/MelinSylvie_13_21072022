@@ -3,6 +3,14 @@ import { useSelector } from 'react-redux'
 import { selectUser } from '../../utils/selectors'
 import './LinkToProfile.css'
 
+
+/**
+ * React component: LinkToProfile
+ * 
+ * @type { React.FC }
+ * @returns { React.ReactElement }
+ */
+
 function LinkToProfile () {
     const user = useSelector(selectUser)
 

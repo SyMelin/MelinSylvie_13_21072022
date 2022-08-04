@@ -2,6 +2,13 @@ import { Link } from 'react-router-dom'
 import logo from '../../assets/argentBankLogo.png'
 import './LogoLink.css'
 
+
+/**
+ * React component: LogoLink
+ * 
+ * @type { React.FC }
+ * @returns { React.ReactElement }
+ */
 function LogoLink () {
     return (
         <Link

@@ -1,5 +1,4 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
-//import produce from 'immer'
 
 const initialState = {
     formData: {
@@ -10,6 +9,8 @@ const initialState = {
     error: false,
 }
 
+
+// Action creators
 export const signInFormSetError = createAction('signInForm/setError')
 export const signInFormSignOut = createAction('signInForm/signOut')
 export const setCheckboxInputValue = createAction('signInForm/setCheckboxInputValue')
@@ -22,9 +23,11 @@ export const setTextInputValue = createAction('signInForm/setTextInputValue', (f
    } 
 })
 
+
+// Reducer creator
 export default createReducer(initialState, builder => builder
     .addCase(setTextInputValue, (draft, action) => {
-        const formEntry = action.payload.formEntry;
+        const formEntry = action.payload.formEntry
         draft.formData[formEntry] = action.payload.value
         return
     })
@@ -35,6 +38,7 @@ export default createReducer(initialState, builder => builder
         draft.error = action.payload
     })
     .addCase(signInFormSignOut, (draft) => {
+        // if the 'remember me' checkbox was not checked at the sign-in page
         if (draft.checkbox === false) {
             draft.formData.email = ''
             draft.formData.password = ''
