@@ -9,7 +9,6 @@ function EditNameFormTextInput ({ id, formEntry }) {
     const dispatch = useDispatch()
     const userData = useSelector(selectUser).data
     const editNameFormError = useSelector(selectEditNameForm).error
-   // const error = editNameForm.error
     const firstLetterToUppercase = (string) => (`${string[0].toUpperCase()}${string.slice(1)}`)
 
     useEffect (() => {

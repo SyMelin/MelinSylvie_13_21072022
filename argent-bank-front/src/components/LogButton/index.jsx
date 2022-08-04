@@ -20,14 +20,16 @@ function LogButton ({ userIsConnected }) {
                 dispatch(userSignOut())
                 dispatch(nameEditingSignOut())
             }}
-            className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}>
+            className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}
+        >
             <i className="fa fa-sign-out"></i>
             Sign Out
         </NavLink>
         ): (
         <NavLink
             to="/login"
-            className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}>
+            className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}
+        >
             <i className="fa fa-user-circle"></i>
             Sign In
         </NavLink>

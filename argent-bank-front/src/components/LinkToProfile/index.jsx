@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../utils/selectors'
+import './LinkToProfile.css'
 
 function LinkToProfile () {
     const user = useSelector(selectUser)
@@ -16,13 +17,13 @@ function LinkToProfile () {
     }
 
     return  (
-        <Link
+        <NavLink
             to="/profile"
-            className="main-nav-item router-link"
+            className={ ({isActive}) => "main-nav-item" + (isActive ? " router-link-exact-active" : " router-link")}
         >
             <i className="fa fa-user-circle"></i>
             {user.data.firstName}
-        </Link>
+        </NavLink>
     )
 }
 

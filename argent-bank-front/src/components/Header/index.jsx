@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectLogin, selectUser } from '../../utils/selectors'
+import LogoLink from '../LogoLink'
 import LinkToProfile from '../LinkToProfile'
 import LogButton from '../LogButton'
-import logo from '../../assets/argentBankLogo.png'
 import './Header.css'
 
 function Header () {
@@ -15,16 +14,7 @@ function Header () {
     return (
         <header>
             <nav className="main-nav">
-                <Link
-                    to="/"
-                    className="link main-nav-logo">
-                    <img
-                        className="main-nav-logo-image"
-                        src={logo}
-                        alt="Argent Bank Logo"
-                    />
-                    <h1 className="sr-only">Argent Bank</h1>
-                </Link>
+                <LogoLink />
                 { userIsConnected && isResolved
                     ? <div>
                         <LinkToProfile />

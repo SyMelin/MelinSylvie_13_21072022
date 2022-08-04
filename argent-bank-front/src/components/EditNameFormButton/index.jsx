@@ -10,7 +10,6 @@ function EditNameFormButton({ type, className, children }) {
         <button
             onClick={(e) => {
                 e.preventDefault()
-                //console.log('AVANT sendNameData ', editNameForm.formData)
                 if (type === 'sendEditedData') {
                     dispatch(sendNameData(e))
                 }
