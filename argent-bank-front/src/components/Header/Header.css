@@ -18,29 +18,6 @@
   align-items: center;
   padding: 5px 20px;
 }
-
-.main-nav .fa {
-  margin-right: 0.125em;
-}
-  
-.main-nav .router-link {
-  font-weight: bold;
-  color: #2c3e50;
-}
-  
-.main-nav .router-link-exact-active {
-  font-weight: bold;
-  color: #42b983;
-}
-  
-.main-nav-item {
-  text-decoration: none;
-  margin-right: 1rem;
-}
-  
-.main-nav-item:hover {
-  text-decoration: underline;
-}
   
 .main-nav-logo {
   display: flex;

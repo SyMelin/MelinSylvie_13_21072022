@@ -4,7 +4,7 @@ import { selectLogin, selectUser } from '../../utils/selectors'
 import LinkToProfile from '../LinkToProfile'
 import LogButton from '../LogButton'
 import logo from '../../assets/argentBankLogo.png'
-import '../../styles/Header.css'
+import './Header.css'
 
 function Header () {
     const user = useSelector(selectUser)

@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { selectSignInForm } from '../../utils/selectors'
 import { setTextInputValue } from '../../utils/features/signInForm'
+import './SignInFormTextInput.css'
 
 function SignInFormTextInput ({ type, id, formEntry }) {
 

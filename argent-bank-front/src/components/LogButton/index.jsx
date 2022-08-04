@@ -5,6 +5,7 @@ import { signInFormSignOut } from '../../utils/features/signInForm'
 import { loginSignOut } from '../../utils/features/login'
 import { userSignOut } from '../../utils/features/user'
 import { nameEditingSignOut } from '../../utils/features/editNameForm'
+import './LogButton.css'
 
 function LogButton ({ userIsConnected }) {
 

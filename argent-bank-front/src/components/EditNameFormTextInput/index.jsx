@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectUser, selectEditNameForm } from '../../utils/selectors'
 import { setTextInputValue } from '../../utils/features/editNameForm'
-import '../../styles/EditNameFormTextInput.css'
+import './EditNameFormTextInput.css'
 
 function EditNameFormTextInput ({ id, formEntry }) {
 

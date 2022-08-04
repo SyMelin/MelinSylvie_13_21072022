@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import SignInForm from '../../components/SignInForm'
-import '../../styles/Login.css'
+import './Login.css'
 
 function Login () {
 

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { sendSignInFormData } from '../../utils/features/login'
-import '../../styles/SignInFormButton.css'
+import './SignInFormButton.css'
 
 function SignInFormButton() {
 

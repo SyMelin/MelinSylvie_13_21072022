@@ -1,4 +1,4 @@
-import '../../styles/Account.css'
+import './Account.css'
 
 function AccountSection ({ account }) {
     return (

@@ -1,6 +1,6 @@
 import EditNameFormTextInput from '../../components/EditNameFormTextInput'
 import EditNameFormButton from '../../components/EditNameFormButton'
-import '../../styles/EditNameForm.css'
+import './EditNameForm.css'
 
 function EditNameForm() {
     return (

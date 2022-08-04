@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Hero from '../../components/Hero'
 import FeaturesSection from '../../components/FeaturesSection'
 import { featureItems } from '../../utils/constantes/features'
-import '../../styles/Home.css'
+import './Home.css'
 
 function Home () {
 

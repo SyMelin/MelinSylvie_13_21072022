@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { setEditNameFormState, sendNameData } from '../../utils/features/editNameForm'
-import '../../styles/EditNameFormButton.css'
+import './EditNameFormButton.css'
 
 function EditNameFormButton({ type, className, children }) {
 

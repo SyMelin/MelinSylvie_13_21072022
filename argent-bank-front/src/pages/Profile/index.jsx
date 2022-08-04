@@ -5,7 +5,7 @@ import { fetchOrUpdateUser } from '../../utils/features/user'
 import AccountSection from '../../components/AccountSection'
 import EditNameForm from '../../components/EditNameForm'
 import EditNameFormButton from '../../components/EditNameFormButton'
-import '../../styles/Profile.css'
+import './Profile.css'
 
 function Profile ({ accountData }) {
     

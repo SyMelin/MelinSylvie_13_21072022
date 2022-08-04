@@ -1,0 +1,11 @@
+.signInForm-error {
+    margin-top: 0.25em;
+    margin-bottom: 1em;
+    color: #00bc77;
+    display: block;
+    width: 100%;
+    text-align: left ;
+    font-weight: bold;
+    font-size: 1em;
+    line-height: 1.5em;
+}

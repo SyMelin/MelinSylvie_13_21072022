@@ -5,7 +5,7 @@ import Profile from '../../pages/Profile';
 import { accountData } from '../../data';
 import Login from '../../pages/Login';
 import Footer from '../Footer';
-import '../../styles/App.css'
+import './App.css'
 
 function App() {
 

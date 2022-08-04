@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { selectSignInForm } from '../../utils/selectors'
 import { setCheckboxInputValue } from '../../utils/features/signInForm'
+import './SignInFormCheckboxInput.css'
 
 function SignInFormCheckboxInput () {
 

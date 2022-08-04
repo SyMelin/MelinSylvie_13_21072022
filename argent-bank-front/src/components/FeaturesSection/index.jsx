@@ -1,5 +1,5 @@
 import FeaturesItem from '../FeaturesItem'
-import '../../styles/Features.css'
+import './Features.css'
 
 function FeaturesSection ({ featureItems }) {
     return (
