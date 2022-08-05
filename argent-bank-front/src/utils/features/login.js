@@ -21,7 +21,8 @@ export const loginSignOut = createAction('login/signOut')
 /**
  * First, prevents the default behaviour of the form button
  * Then return a thunk function that:
- *  calls the fetchOrUpdateLogin function
+ * checks if a formData entry is empty and stops the process in this case
+ * Then, calls the fetchOrUpdateLogin function
  * 
  * @param {*} e - event
  * @param { function } navigate - const navigte = useNavigate()
@@ -30,6 +31,10 @@ export function sendSignInFormData(e, navigate) {
     e.preventDefault()
     return async (dispatch, getState) => {
         const signInFormData = selectSignInForm(getState()).formData
+        if ((signInFormData.email === "") || (signInFormData.password === "")) {
+            console.log("l'un des 2 est vide")
+            return
+        }
         dispatch(fetchOrUpdateLogin(signInFormData, navigate))
     }
 }
