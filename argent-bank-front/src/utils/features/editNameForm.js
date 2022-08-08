@@ -29,7 +29,6 @@ export const setTextInputValue = createAction('nameEditing/setTextInputValue', (
 
 
 /**
- * Thunk function
  * First, prevents the default behaviour of the form button
  * Then return a thunk function that:
  * checks if a formData entry is empty and stops the process in this case
