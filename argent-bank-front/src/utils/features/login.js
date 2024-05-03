@@ -1,6 +1,7 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
 import { selectLogin, selectSignInForm } from '../selectors'
 import { signInFormSetError } from './signInForm'
+import { mockLoginRequest } from '../mockedServer/mockLoginRequest'
 
 const initialState = {
     status: 'void',
@@ -59,6 +60,7 @@ export function fetchOrUpdateLogin(signInFormData, navigate) {
         // else, launch the request
         dispatch(loginFetching())
         try {
+            /*
             const response = await fetch(
                 'http://localhost:3001/api/v1/user/login',
                 {
@@ -68,7 +70,12 @@ export function fetchOrUpdateLogin(signInFormData, navigate) {
                 }
             )
             const resJson = await response.json()
-            console.log("resJson", await resJson)
+            //console.log("resJson", await resJson)
+            */
+
+            // Mocked request
+            const resJson = await mockLoginRequest(signInFormData)
+
             if (resJson.status === 200) {
                 dispatch(loginResolved(resJson.body.token))
                 dispatch(connectUser())

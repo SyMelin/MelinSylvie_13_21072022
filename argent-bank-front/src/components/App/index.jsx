@@ -15,10 +15,11 @@ import './App.css'
  * @returns { React.ReactElement }
  */
 function App() {
+  const basename = process.env.NODE_ENV === 'production' ? '/MelinSylvie_13_21072022' : ''
 
   return (
     <div className="App">
-      <Router>
+      <Router basename={basename}>
         <Header />
         <Routes>
           <Route exact path="/" element={<Home />} />

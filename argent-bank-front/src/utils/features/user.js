@@ -1,5 +1,7 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
 import { selectUser } from '../selectors'
+import { mockFetchUser } from '../mockedServer/mockFetchUser'
+import { mockUpdateUserName } from '../mockedServer/mockUpdateUserName'
 
 const initialState = {
     status: 'void',
@@ -31,6 +33,7 @@ export function fetchOrUpdateUser(token) {
         // else, launch the request
         dispatch(userFetching())
         try {
+            /*
             const response = await fetch(
                 'http://localhost:3001/api/v1/user/profile',
                 {
@@ -42,7 +45,12 @@ export function fetchOrUpdateUser(token) {
                 }
             )
             const resJson = await response.json()
-            console.log("resJson", await resJson)
+            //console.log("resJson", await resJson)
+            */
+
+            // Mocked request
+            const resJson = await mockFetchUser(token)
+
             if (resJson.status === 200) {
                 dispatch(userResolved(resJson.body))
             } else {
@@ -73,6 +81,7 @@ export function fetchOrUpdateUserNameData(token, formData) {
         // else, launch the request
         dispatch(userFetching())
         try {
+            /*
             const response = await fetch(
                 'http://localhost:3001/api/v1/user/profile',
                 {
@@ -85,7 +94,17 @@ export function fetchOrUpdateUserNameData(token, formData) {
                 }
             )
             const resJson = await response.json()
+            //console.log("resJson", await resJson)
+            */
+
+            // Mocked request
+            // Note : the profile page always sends a request for user data using the token for security reasons
+            // Because this is a mock request, if the user data is updated, the user data will only be updated in the store, not on the server
+            // the profile page will be updated as expected
+            // but if you refresh the page, the user data will be reset to the initial data found in the mockedData.js file
+            const resJson = await mockUpdateUserName(token, formData)
             console.log("resJson", await resJson)
+
             if (resJson.status === 200) {
                 dispatch(userResolved(resJson.body))
             } else {
